@@ -1,12 +1,18 @@
-var app = require('express')();
+var express = require("express");
+var path = require('path');
+var app = express();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 var port = 4000;
 
 const users = {};
 
+app.use(express.static(path.join(__dirname,'public')));
+
+
+
 app.get('/', function (req, res) {
-    res.render(__dirname + '/index.ejs');
+    res.render(__dirname + '/views/index.ejs');
 });
 
 
