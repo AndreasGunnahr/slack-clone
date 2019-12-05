@@ -6,7 +6,7 @@ var port = 4000;
 const users = {};
 
 app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index.html');
+    res.render(__dirname + '/index.ejs');
 });
 
 
