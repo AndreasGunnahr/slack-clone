@@ -1,16 +1,14 @@
+
 const socket = io('http://localhost:4000')
 const messageContainer = document.getElementById('messages')
 const messageForm = document.getElementById('send')
 const messageInput = document.getElementById('input')
 
-const name = prompt('What is your name?')
-appendMessage(`You joined as ${name}`)
+
 socket.emit('new-user', name)
 
-console.log(name)
-
 socket.on('chat-message', data => {
-    appendMessage(`${data.name}: ${data.message}`)
+    appendMessage(`You: ${data.message}`)
 })
 
 socket.on('user-connected', name => {
