@@ -2,22 +2,12 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
+const fetch = require('node-fetch');
 
 
-fetch("http://localhost:5000/login", option)
-    .then(response => {
-        response.json().then(function(data) {
-            
-            if(data.status){
-                req.session.activeUserInfo = data;
-                res.redirect('/dashboard');
-            }else{
-                req.session.error = data.error;
-                res.redirect('/');
-            }
-        });
-    });
-
+fetch("http://localhost:5000/api/profiles")
+.then(r =>  r.json().then(data => ({status: r.status, body: data})))
+.then(obj => console.log(obj));
 
 //Set storage engine
 const storage = multer.diskStorage({

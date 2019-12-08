@@ -3,8 +3,6 @@ var path = require('path');
 var sassMiddleware = require('node-sass-middleware');
 var IndexRouter = require('./routes/index');
 const port = 3000;
-const axios = require('axios');
-
 var app = express();
 
 /* View engine setup */ 
@@ -33,17 +31,6 @@ app.use('/',ProfileRouter);
 
 app.listen(port, () => console.log(`Client listening on port ${port}!`))
 
-
-/*function makeGetRequest() {
-  axios({
-    method: 'get',
-    url: 'https://localhost:5000/api/profiles'
-  })
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
-};
-
-makeGetRequest();*/
 
 
 module.exports = app;
