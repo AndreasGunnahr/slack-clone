@@ -1,9 +1,10 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
+/* GET dashboard page. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+    const signedInUser = req.session.activeUserInfo;
+    res.render('dashboard');
 });
 
 module.exports = router;

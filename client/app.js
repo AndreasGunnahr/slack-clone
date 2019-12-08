@@ -1,7 +1,8 @@
-var express = require('express');
-var path = require('path');
-var sassMiddleware = require('node-sass-middleware');
-var IndexRouter = require('./routes/index');
+const express = require('express');
+const path = require('path');
+const cors = require('cors');
+const sassMiddleware = require('node-sass-middleware');
+var session = require('express-session');
 const port = 3000;
 
 var app = express();
@@ -12,6 +13,8 @@ app.set('view engine', 'ejs');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
+app.use(session({secret: 'mySecret', resave: false, saveUninitialized: false}));
 /* SASS middleware that takes our SCSS file and convert it to a CSS file */ 
 app.use(sassMiddleware({
   src: path.join(__dirname, 'public'),
@@ -24,9 +27,17 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 /* Import client routes */ 
 var IndexRouter = require('./routes/index');
+var DashboardRouter = require('./routes/dashboard');
+var LoginRouter = require('./routes/login');
+var RegisterRouter = require('./routes/register');
+
 
 /* Setting client to use our routes */ 
-app.use('/',IndexRouter);
+app.use('/', IndexRouter);
+app.use('/login', LoginRouter);
+app.use('/dashboard', DashboardRouter);
+app.use('/register', RegisterRouter);
+
 
 app.listen(port, () => console.log(`Client listening on port ${port}!`))
 
