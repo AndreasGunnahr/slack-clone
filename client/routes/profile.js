@@ -2,7 +2,21 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
-const axios = require('axios');
+
+
+fetch("http://localhost:5000/login", option)
+    .then(response => {
+        response.json().then(function(data) {
+            
+            if(data.status){
+                req.session.activeUserInfo = data;
+                res.redirect('/dashboard');
+            }else{
+                req.session.error = data.error;
+                res.redirect('/');
+            }
+        });
+    });
 
 
 //Set storage engine
