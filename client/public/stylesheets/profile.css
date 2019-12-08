@@ -1,0 +1,20 @@
+img {
+  height: 366px;
+  width: 366px; }
+
+.profile {
+  margin: 0 auto;
+  width: 366px;
+  height: 500px; }
+
+.btn {
+  background: #00a37a;
+  color: white;
+  padding: 10px 20px;
+  border: 0.4px solid darkslategray;
+  border-radius: 8px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1rem;
+  font-weight: 800; }
+  .btn:hover {
+    cursor: pointer; }

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/profile.css">
+</head>
+<body>
+    <div class="container">
+        <div class="profile">
+            <img src="<%= typeof file != 'undefined' ? file : defaultPicture %>">
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+            <label for="btn" class="btn">Upload an image </label>
+            <input id="btn" name="profilePicture" type="file" onchange="this.form.submit()" accept="image/png, image/jpeg" style="visibility: hidden;">
+            </form>
+        </div>
+    </div>
+    
+</body>
+</html>
