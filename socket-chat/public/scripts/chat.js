@@ -1,4 +1,3 @@
-
 const socket = io('http://localhost:4000')
 const messageContainer = document.getElementById('messages')
 const messageForm = document.getElementById('send')
@@ -7,8 +6,10 @@ const messageInput = document.getElementById('input')
 
 socket.emit('new-user', name)
 
+console.log(name)
+
 socket.on('chat-message', data => {
-    appendMessage(`You: ${data.message}`)
+    appendMessage(name `: ${data.message}`)
 })
 
 socket.on('user-connected', name => {

@@ -20,11 +20,17 @@ app.get('/', function (req, res) {
     res.render('name');
 });
 
+
+
 app.post('/chat', function (req, res) {
-    var name = req.body.name;
-    var message = req.body.message;
-    res.render("index", {name: name, message: message });
+    var nameVal = req.body.nameVal;
+    res.render("index", {nameVal: nameVal});
 });
+
+//app.post('/chat', function (req, res) {
+   // var msgVal = req.body.msgVal;
+    //res.render("index", {msgVal: msgVal});
+//});
 
 
 
@@ -40,7 +46,7 @@ io.on('connection', function (socket) {
         socket.broadcast.emit('user-disconnected', users[socket.id]);
         delete users[socket.id];
       });
-    console.log('a user connected');
+    console.log( 'a user connected');
 });
 
 
