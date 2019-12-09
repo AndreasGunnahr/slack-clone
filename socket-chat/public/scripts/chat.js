@@ -9,7 +9,7 @@ socket.emit('new-user', name)
 console.log(name)
 
 socket.on('chat-message', data => {
-    appendMessage(name `: ${data.message}`)
+    appendMessage(` ${name}: ${data.message}`)
 })
 
 socket.on('user-connected', name => {

@@ -20,17 +20,19 @@ app.get('/', function (req, res) {
     res.render('name');
 });
 
-
+app.get('/chat', function (req, res) {
+    res.render('index');
+});
 
 app.post('/chat', function (req, res) {
     var nameVal = req.body.nameVal;
     res.render("index", {nameVal: nameVal});
 });
 
-//app.post('/chat', function (req, res) {
-   // var msgVal = req.body.msgVal;
-    //res.render("index", {msgVal: msgVal});
-//});
+app.post('/chat', function (req, res) {
+    var msgVal = req.body.msgVal;
+    res.render("index", {msgVal: msgVal});
+});
 
 
 
