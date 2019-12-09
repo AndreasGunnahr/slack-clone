@@ -2,6 +2,7 @@ const socket = io('http://localhost:4000')
 const messageContainer = document.getElementById('messages')
 const messageForm = document.getElementById('send')
 const messageInput = document.getElementById('input')
+const send = document.getElementById("send-btn")
 
 
 socket.emit('new-user', name)
@@ -18,6 +19,11 @@ socket.on('user-connected', name => {
 
 socket.on('user-disconnected', name => {
     appendMessage(`${name} disconnected`)
+})
+
+send.addEventListener('submit', e => {
+    e.preventDefault()
+    
 })
 
 messageForm.addEventListener('submit', e => {
