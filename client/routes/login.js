@@ -22,7 +22,7 @@ router.post('/', function (req, res, next) {
             
             if(data.status){
                 req.session.activeUserInfo = data;
-                res.redirect('/dashboard');
+                res.redirect('/chat');
             }else{
                 req.session.error = data.error;
                 res.redirect('/');

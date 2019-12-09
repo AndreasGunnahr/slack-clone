@@ -2,10 +2,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
-
 const app = express();
 const port = 5000;
 const bodyParser = require('body-parser')
+const http = require('http').createServer(app);
+
+
+
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 // app.use(express.json());
@@ -31,6 +34,6 @@ app.use('/register', validateRegisterRouter);
 
 
 
-app.listen(port, () => console.log(`Server listening on port ${port}`));
+http.listen(port, () => console.log(`Client listening on port ${port}!`));
 
 module.exports = app;
