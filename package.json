@@ -12,10 +12,7 @@
     "bcrypt": "^3.0.7",
     "body-parse": "^0.1.0",
     "body-parser": "^1.19.0",
-<<<<<<< HEAD
-=======
     "cors": "^2.8.5",
->>>>>>> master
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "express-session": "^1.17.0",

@@ -46,6 +46,30 @@ fetch("http://localhost:5000/api/profiles")
                         defaultPicture: 'uploads/defaultPicture.png'
                     });
                 } else{
+                    const profile = {
+                        name: 'test',
+                        src: 'uploads/test.jpg'
+                    }
+                
+                    const option = {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(profile)
+                    };
+                
+                    fetch("http://localhost:5000/login", option)
+                    .then(response => {
+                        response.json().then(function(data) {
+                            
+                            if(data.status){
+                                console.log(data);
+                            }else{
+                                console.log('err');
+                            }
+                        });
+                    });
                     console.log(`uploads/${req.file.filename}`);
                     res.render('profile', {
                         defaultPicture: 'uploads/defaultPicture.png',

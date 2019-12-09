@@ -26,13 +26,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 /* Import client routes */ 
 var IndexRouter = require('./routes/index');
-<<<<<<< HEAD
 var ProfileRouter = require('./routes/profile');
 
 /* Setting client to use our routes */ 
 app.use('/',IndexRouter);
 app.use('/',ProfileRouter);
-=======
 var DashboardRouter = require('./routes/dashboard');
 var LoginRouter = require('./routes/login');
 var RegisterRouter = require('./routes/register');
@@ -44,7 +42,6 @@ app.use('/login', LoginRouter);
 app.use('/dashboard', DashboardRouter);
 app.use('/register', RegisterRouter);
 
->>>>>>> master
 
 app.listen(port, () => console.log(`Client listening on port ${port}!`))
 
