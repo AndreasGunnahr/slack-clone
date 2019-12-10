@@ -24,7 +24,6 @@ const fetch = require('node-fetch');
                     renderData(data);
                 });
         function renderData(data){
-            console.log(data.body.image);
             res.render('profile', {defaultPicture: data.body.image})
         }
       });
@@ -64,6 +63,7 @@ router.post('/upload', function(req, res, next) {
                     image: `uploads/${req.file.filename}`,
                     id: req.session.activeUserInfo.id
                 }
+                console.log(profile, 'hej profil');
                 
                 const option = {
                 method: "POST",
@@ -73,7 +73,7 @@ router.post('/upload', function(req, res, next) {
                 body: JSON.stringify(profile)
                 };
                 
-                fetch("http://localhost:5000/api/profiles", option)
+                fetch("http://localhost:5000/api/profiles/upload", option)
                 .then(r =>  r.text().then(data => ({status: r.status, body: data})))
                 .then(function(data){
                 });
@@ -88,7 +88,7 @@ router.post('/upload', function(req, res, next) {
 });
 
 
-router.post('/delete', function(req, res, next){
+/*router.post('/delete', function(req, res, next){
     const profile = {
         id: req.session.activeUserInfo.id,
         image: 'uploads/defaultPicture.png'
@@ -108,6 +108,6 @@ router.post('/delete', function(req, res, next){
     res.render('profile', {
         defaultPicture: 'uploads/defaultPicture.png'
     })
-})
+})*/
 
 module.exports = router;
