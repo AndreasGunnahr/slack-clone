@@ -38,7 +38,11 @@ body {
 }
 
 #messages {
-  padding: 10px;
+  padding: 3px;
+}
+
+ul {
+  margin-top: 15px;
 }
 
 .sidebar {

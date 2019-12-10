@@ -1,41 +1,40 @@
-const socket = io('http://localhost:4000')
+const socket = io.connect('http://localhost:4000')
 const messageContainer = document.getElementById('messages')
 const messageForm = document.getElementById('send')
 const messageInput = document.getElementById('input')
-const send = document.getElementById("send-btn")
+const getValue = document.getElementsByClassName("text")[0].innerText;
+const nameVal = getValue.substring(14)
 
 
-socket.emit('new-user', name)
+console.log(nameVal);
 
-console.log(name)
+
+socket.emit('new-user', nameVal)
+
+
 
 socket.on('chat-message', data => {
-    appendMessage(` ${name}: ${data.message}`)
+    appendMessage(nameVal + `: ${data.message}`)
 })
 
-socket.on('user-connected', name => {
-    appendMessage(`${name} connected`)
+socket.on('user-connected', nameVal => {
+    appendMessage(nameVal + ` connected`)
 })
 
-socket.on('user-disconnected', name => {
-    appendMessage(`${name} disconnected`)
-})
-
-send.addEventListener('submit', e => {
-    e.preventDefault()
-    
+socket.on('user-disconnected', nameVal => {
+    appendMessage(nameVal + ` disconnected`)
 })
 
 messageForm.addEventListener('submit', e => {
     e.preventDefault()
     const message = messageInput.value
-    appendMessage(`${name}: ${message}`)
+    appendMessage( nameVal + ' 21:32' + '<br>' + ` ${message}`).innerHTML
     socket.emit('send', message)
     messageInput.value = ''
 })
 
 function appendMessage(message) {
     const messageElement = document.createElement('div')
-    messageElement.innerText = message
+    messageElement.innerHTML =  message
     messageContainer.append(messageElement)
 }

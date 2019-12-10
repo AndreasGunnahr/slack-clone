@@ -29,9 +29,11 @@ body {
             overflow-y: scroll;
             padding: 15px;
         }
-        #messages{
-            padding: 10px;
-            
+        #messages {
+            padding: 3px;
+        }
+        ul{
+            margin-top: 15px;
         }
         .sidebar{
             grid-row: 1/11;
