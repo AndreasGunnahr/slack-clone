@@ -45,6 +45,7 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   background: white;
+<<<<<<< HEAD
   padding: 30px;
   border-radius: 10px;
   z-index: 30;
@@ -99,6 +100,17 @@ body {
         font-size: 1.4rem; }
         #createChannel__container .createChannel__form .createButton__container #createChannelBtn:hover {
           cursor: pointer; }
+=======
+  overflow-y: scroll;
+  padding: 15px;
+  font-size: 1.4rem;
+  margin-bottom: 9rem;
+}
+
+.grid-container .text #messages {
+  padding: 10px;
+}
+>>>>>>> 1aa076e4f9d3bfaae2c1171603e2a78503b30c69
 
 #createDirectMessage__container {
   display: none;
@@ -109,6 +121,7 @@ body {
   background: white;
   padding: 30px;
   border-radius: 10px;
+<<<<<<< HEAD
   z-index: 30;
   width: 100%;
   max-width: 920px; }
@@ -198,6 +211,11 @@ body {
           #createDirectMessage__container .inner__container table tbody tr:hover {
             background: lightgrey;
             cursor: pointer; }
+=======
+  font-family: "Lato", sans-serif;
+  font-size: 1.4rem;
+}
+>>>>>>> 1aa076e4f9d3bfaae2c1171603e2a78503b30c69
 
 .grid-container {
   position: relative;

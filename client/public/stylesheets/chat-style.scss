@@ -336,6 +336,7 @@ body {
         overflow-y: scroll;
         padding: 15px;
         font-size: 1.4rem;
+        margin-bottom: 9rem;
         #messages {
             padding: 10px;
         
@@ -355,6 +356,8 @@ body {
             width: 90%;
             border: 1px solid gray;
             border-radius: 10px;
+            font-family: $chat-font;
+            font-size: 1.4rem;
         }
         
         button {

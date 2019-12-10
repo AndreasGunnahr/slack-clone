@@ -2,7 +2,7 @@ const socket = io('http://localhost:3000')
 const messageContainer = document.getElementById('messages')
 const messageForm = document.getElementById('send')
 const messageInput = document.getElementById('input')
-let username = document.getElementById('username').innerText;
+//let username = document.getElementById('username').innerText;
 
 socket.emit('new-user', name)
 

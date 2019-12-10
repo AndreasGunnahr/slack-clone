@@ -106,6 +106,7 @@ p {
           font-size: 1.1rem; }
       .wrapper .left__column form #login__error,
       .wrapper .left__column form #register__error {
+<<<<<<< HEAD
         margin-top: -15px;
         font-family: "Montserrat", sans-serif;
         font-weight: 400 !important;
@@ -114,6 +115,13 @@ p {
       .wrapper .left__column form #login__success {
         color: green;
         font-family: "Montserrat", sans-serif;
+=======
+        color: red;
+        font-size: 1.4rem; }
+      .wrapper .left__column form #login__success,
+      .wrapper .left__column form #register__success {
+        color: green;
+>>>>>>> 1aa076e4f9d3bfaae2c1171603e2a78503b30c69
         font-size: 1.4rem; }
     .wrapper .left__column #register__form {
       display: none; }
