@@ -4,6 +4,7 @@ var router = express.Router();
 /* GET dashboard page. */
 router.get('/', function(req, res, next) {
     const signedInUser = req.session.activeUserInfo;
+    //console.log(req.session.activeUserInfo)
     res.render('dashboard');
 });
 

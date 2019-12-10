@@ -10,6 +10,7 @@ router.post('/', function (req, res, next) {
   let enteredUsername = req.body.username.toLowerCase();
   let enteredPassword = req.body.password.toLowerCase();
   Users.findOne({username: enteredUsername}, async function(err, data) {  
+    console.log(data, 'data')
     try{ 
         if(err || data == null){
           res.status(400).json({status: false, error: "Username don't exist."})

@@ -5,15 +5,29 @@ const path = require('path');
 const fetch = require('node-fetch');
 
 
-fetch("http://localhost:5000/api/profiles")
-.then(r =>  r.json().then(data => ({status: r.status, body: data})))
-.then(function(obj){
-    console.log(obj.body.profilePicture);
+
     router.get('/profile', function(req, res, next) {
-        res.render('profile', {defaultPicture: 'uploads/defaultPicture.png', file: obj.body.profilePicture});
-        next();
+        const profile = {
+            id: req.session.activeUserInfo.id
+        }
+        
+        const option = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(profile)
+        };
+        fetch("http://localhost:5000/api/profiles", option)
+                .then(r =>  r.json().then(data => ({status: r.status, body: data})))
+                .then(function(data){
+                    renderData(data);
+                });
+        function renderData(data){
+            console.log(data.body.image);
+            res.render('profile', {defaultPicture: data.body.image})
+        }
       });
-});
 
 
 //Set storage engine
@@ -38,17 +52,17 @@ router.post('/upload', function(req, res, next) {
             console.log(err);
             res.render('profile', {
                 msg: err,
-                defaultPicture: 'uploads/defaultPicture.png'
+                defaultPicture: req.session.activeUserInfo.image
             });
         } else{
             if(req.file == undefined){
                 res.render('profile', {
-                    defaultPicture: 'uploads/defaultPicture.png'
+                    defaultPicture: req.session.activeUserInfo.image
                 });
             } else{
                 const profile = {
-                    name: 'byid',
-                    profilePicture: `uploads/${req.file.filename}`
+                    image: `uploads/${req.file.filename}`,
+                    id: req.session.activeUserInfo.id
                 }
                 
                 const option = {
@@ -63,9 +77,9 @@ router.post('/upload', function(req, res, next) {
                 .then(r =>  r.text().then(data => ({status: r.status, body: data})))
                 .then(function(data){
                 });
-                console.log(`uploads/${req.file.filename}`);
+                //console.log(`uploads/${req.file.filename}`);
                 res.render('profile', {
-                    defaultPicture: 'uploads/defaultPicture.png',
+                    defaultPicture: req.session.activeUserInfo.image,
                     file: `uploads/${req.file.filename}`
                 });
             }
@@ -76,7 +90,8 @@ router.post('/upload', function(req, res, next) {
 
 router.post('/delete', function(req, res, next){
     const profile = {
-        profilePicture: 'uploads/defaultPicture.png'
+        id: req.session.activeUserInfo.id,
+        image: 'uploads/defaultPicture.png'
     }
     const option = {
         method: "POST",

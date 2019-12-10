@@ -15,7 +15,10 @@ const UserSchema = mongoose.Schema(
         lowercase: true, 
         },
     password: String,
-    image: String,
+    image: {
+      type: String,
+      default: 'uploads/defaultPicture.png'
+    }
     
   });
 // {timestamps: true}

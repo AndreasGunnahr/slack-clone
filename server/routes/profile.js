@@ -1,9 +1,11 @@
 const express = require ('express');
 const router = express.Router();
-const Profile = require('../models/profileModel');
+const Profile = require('../models/user');
 
-router.get('/profiles', function(req, res, next){
-    Profile.findOne().then(function(profile){
+router.post('/profiles', function(req, res, next){
+    const id = { _id: req.body.id };
+    Profile.findById(id).then(function(profile){
+        console.log(req.body);
         res.send(profile);
     }).catch(next);
 });
@@ -21,19 +23,24 @@ router.get('/profiles', function(req, res, next){
 })*/
 
 router.post('/profiles', function(req, res, next){
-    Profile.findByIdAndUpdate({_id: '5dee07d5e810bf0f5bc42e7d'}, req.body).then(function(){
-    Profile.findOne({_id: '5dee07d5e810bf0f5bc42e7d'}).then(function(profile){
-        console.log(req.body.profilePicture);
+    const id = { _id: req.body.id };
+    const image = { image: req.body.image};
+    Profile.findByIdAndUpdate(id, image).then(function(){
+    Profile.findOne(id).then(function(profile){
         res.send(profile);
     });
 }).catch(next);
 })
 
 router.post('/profiles/delete', function(req, res, next){
-    Profile.findOneAndUpdate(req.body).then(function(profile){
+    const id = { _id: req.body.id };
+    const image = { image: req.body.image};
+    Profile.findByIdAndUpdate(id, image).then(function(){
+    Profile.findOne(id).then(function(profile){
         res.send(profile);
-    }).catch(next);
-});
+    });
+}).catch(next);
+})
 
 
 
