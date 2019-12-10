@@ -23,11 +23,10 @@ router.post('/', function (req, res, next) {
     .then(response => {
         response.json().then(function(data) {
             if(data.status){
-                // req.session.error = data.error;
-                req.session.success = data.success;
+                req.flash("success",data.success);
                 res.redirect('/');
             }else{
-                req.session.error = data.error;
+                req.flash("error",data.error);
                 res.redirect('/');
             }
         });

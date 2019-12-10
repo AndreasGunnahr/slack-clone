@@ -3,10 +3,11 @@ const path = require('path');
 const cors = require('cors');
 const port = 3000;
 const app = express();
-const http = require('http').createServer(app);
+const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const sassMiddleware = require('node-sass-middleware');
 var session = require('express-session');
+var flash = require('connect-flash');
 
 /* View engine setup */ 
 app.set('views', path.join(__dirname, 'views'));
@@ -15,7 +16,14 @@ app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
-app.use(session({secret: 'mySecret', resave: false, saveUninitialized: false}));
+app.use(flash());
+app.use(session({secret: 'mySecret', 
+  resave: true, 
+  saveUninitialized: true,
+  // cookie: {
+  //   maxAge: 24 * 60 * 60 * 1000
+  // }
+  }));
 /* SASS middleware that takes our SCSS file and convert it to a CSS file */ 
 app.use(sassMiddleware({
   src: path.join(__dirname, 'public'),
@@ -28,20 +36,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 /* Import client routes */ 
 var IndexRouter = require('./routes/index');
-// var DashboardRouter = require('./routes/dashboard');
 var LoginRouter = require('./routes/login');
 var RegisterRouter = require('./routes/register');
 var ChatRouter = require('./routes/chat');
+// var CreateChannelRouter = require('./routes/createChannel');
+// var CreateDirectMessageRouter = require('./routes/createDirectMessage');
 
 
 /* Setting client to use our routes */ 
 app.use('/', IndexRouter);
-app.use('/login', LoginRouter);
-// app.use('/dashboard', DashboardRouter);
 app.use('/chat', ChatRouter);
+app.use('/login', LoginRouter);
 app.use('/register', RegisterRouter);
+// app.use('/chat/new-directMessage', CreateDirectMessageRouter);
 
 
+
+// users = {};
 /* Settings for our socket.io connection */ 
 // io.on('connection', function (socket) {
 //   socket.on('new-user', name => {

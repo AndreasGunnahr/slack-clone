@@ -101,12 +101,15 @@
       }
       #login__error,
       #register__error{
+        margin-top: -15px;
+        font-family: $header-font;
+        font-weight: 400 !important;
         color: red;
         font-size: 1.4rem;
       }
-      #login__success,
-      #register__success{
+      #login__success{
         color: green;
+        font-family: $header-font;
         font-size: 1.4rem;
       }
     }

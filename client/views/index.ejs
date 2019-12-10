@@ -20,6 +20,7 @@
             <input type = "password" id = "login__password" class = "fontAwesome" name = "password" placeholder="&#xf023; Password">
             <p class = "forgot__p">Forgot password? <a>Click here</a></p>
             <p id = "login__error"><%= error %></p>
+            <p id = "login__success"><%= success %></p>
             <button type = "submit" class = "login__btn">Login</button>
             <p class = "login__p">Don't have an account? <a class = "register">Sign up</a></p>
           </form>
@@ -30,7 +31,6 @@
             <input type = "password" class = "fontAwesome" name = "password" placeholder="&#xf023; Password"> 
             <p class = "account__p">Already have an account? <a class = "login">Log In</a></p>
             <p id = "register__error"><%= error %></p>
-            <p id = "register__success"><%= success %></p>
             <button class = "register__btn">Register</button>
             <p class = "register__p">By signing up, you agree to our <a>Terms & Conditions</a></p>
           </form>
