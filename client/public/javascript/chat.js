@@ -6,13 +6,11 @@ const messageInput = document.getElementById('input')
 
 
 var today = new Date()
-var time = today.getHours() + ":" + today.getMinutes()
+var time = today.getHours() + ":" + (today.getMinutes()<10?'0':'') + today.getMinutes()
 
 
 
 const name = "ydehed"
-
-socket.emit('new-user', name)
 
 socket.emit('new-user', name)
 
@@ -28,6 +26,35 @@ socket.on('user-disconnected', name => {
     appendMessage(` ${name} disconnected`)
 })
 
+//is typing.. 
+
+// var typing = false;
+// var timeout = undefined;
+
+// function timeoutFunction(){
+//   typing = false;
+//   socket.emit('is typing', name);
+// }
+
+// function onKeyDownNotEnter(){
+//   if(typing == false) {
+//     typing = true
+//     socket.emit('is typing', name);
+//     timeout = setTimeout(timeoutFunction, 5000);
+//   } else {
+//     clearTimeout(timeout);
+//     timeout = setTimeout(timeoutFunction, 5000);
+//   }
+
+// }
+
+// messageForm.addEventListener('keyup', e =>{
+//     e.preventDefault()
+//     timeoutFunction()
+//     onKeyDownNotEnter()
+//     console.log(timeoutFunction)
+// })
+
 messageForm.addEventListener('submit', e => {
     e.preventDefault()
     const message = messageInput.value
@@ -35,7 +62,10 @@ messageForm.addEventListener('submit', e => {
     appendMessage(message)
     socket.emit('send', message)
     messageInput.value = ''
+    messageContainer.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"})
 })
+
+
 
 function appendMessage(message) {
     

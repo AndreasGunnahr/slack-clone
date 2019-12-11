@@ -27,6 +27,9 @@ io.on('connection', socket => {
       socket.broadcast.emit('user-disconnected', users[socket.id])
       delete users[socket.id]
     })
+    socket.on('is typing', function(data){
+      socket.broadcast.emit('typing', {name: data.name})
+     })
   })
 
 
