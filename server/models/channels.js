@@ -1,18 +1,18 @@
 const mongoose = require('mongoose');
 
-const MessageSchema = mongoose.Schema(
+const ChannelSchema = mongoose.Schema(
   {
-    channelID: {
+    createdByUserID: {
     },
-    username: {
+    name: {
      type: String,
      lowercase: true
     },
-    text: {
+    description: {
         type: String,
         lowercase: true
     }
   });
 
 
-module.exports = mongoose.model('Messages',MessageSchema);
+module.exports = mongoose.model('Channels',ChannelSchema);

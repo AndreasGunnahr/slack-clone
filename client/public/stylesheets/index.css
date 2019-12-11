@@ -107,11 +107,14 @@ p {
           font-size: 1.1rem; }
       .wrapper .left__column form #login__error,
       .wrapper .left__column form #register__error {
+        margin-top: -15px;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 400 !important;
         color: red;
         font-size: 1.4rem; }
-      .wrapper .left__column form #login__success,
-      .wrapper .left__column form #register__success {
+      .wrapper .left__column form #login__success {
         color: green;
+        font-family: "Montserrat", sans-serif;
         font-size: 1.4rem; }
     .wrapper .left__column #register__form {
       display: none; }
@@ -157,5 +160,14 @@ p {
       font-size: 3rem; }
     .wrapper .left__column form {
       margin-top: 10px; }
+      .wrapper .left__column form #login__error,
+      .wrapper .left__column form #register__error {
+        margin-top: -11px;
+        color: red;
+        font-size: 1rem; }
+      .wrapper .left__column form #login__success {
+        color: green;
+        font-family: "Montserrat", sans-serif;
+        font-size: 1rem; }
   .wrapper .right__column {
     display: none; } }

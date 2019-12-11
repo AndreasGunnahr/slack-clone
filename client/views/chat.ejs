@@ -4,25 +4,83 @@
 <head>
     <title>Socket.IO chat</title>
 
-    <link rel="stylesheet" href="stylesheets/chat-style.css">
+    <link rel="stylesheet" href="/stylesheets/chat-style.css">
     <script src="https://kit.fontawesome.com/fca6d7d29b.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
 </head>
 
 <body>
+    <div class = "overlay"></div>
+    <!-- Create Channel container - start -->
+    <div id = "createChannel__container">
+        <a class="fas fa-times"></a>
+        <h1>Create a channel</h1>
+        <p>Channels are where your team communicates. They’re best when organized around a topic — #marketing, for example.</p>
+        <label for = "name"></label>
+        <form class = "createChannel__form" method = "POST" action = "/chat/new-channel">
+            <label for = "name">Name </label>
+            <input class = "createChannel__input" name = "name" placeholder="#   e.g. plan-budget">
+            <label for = "description">Description <span>(Optional)</span></label>
+            <input class = "createChannel__input" name = "description">
+            <span>What's this channel about?</span>
+            <% if (!status) { %>
+                <h1><%= error %></h1>
+            <% } %>
+            <div class = "createButton__container">
+                <input type = "submit" id = "createChannelBtn" value = "Create"></input>
+            </div>
+        </form>
+    </div>
+    <!-- Create Channel container - end -->
+    <div id = "createDirectMessage__container">
+            <a class="fas fa-times"></a>
+            <div class = "inner__container">
+                <h1>Direct Messages</h1>
+                <form class = "createDirectMessage__form" method = "POST" action = "/search">
+                    <input class = "createDirectMessage__input" name = "search" placeholder = "Find or start a conversation">
+                    <input type = "button" id = "createDirectMessageBtn" value = "Go">
+                </form>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>Recent conversation</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <a class = "directMessage">Elin</a>
+                                <a class = "directMessage__time">2 days ago</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a class = "directMessage">Andreas</a>
+                                <a class = "directMessage__time">2 days ago</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a class = "directMessage">Patrik</a>
+                                <a class = "directMessage__time">2 days ago</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a class = "directMessage">Philip</a>
+                                <a class = "directMessage__time">2 days ago</a>
+                            </td>
+                        </tr>
+                    </tbody>                       
+                </table>
+            </div>
+        </div>
+    <!-- Create direct message container - start -->
+
+    <!-- Create direct message container - end -->
     <div class="grid-container">
         <div class="header">
 
-        </div>
-        <div class = "createRoom__container">
-            <h1>Create a channel</h1>
-            <p>Channels are where your team communicates. They’re best when organized around a topic — #marketing, for example.</p>
-            <label for = "name"></label>
-            <div class = "input__container">
-                <input name = "name" placeholder="#   e.g. plan-budget">
-                <label for = "description">Description <span>(Optional)</span></label>
-                <input name = "description">
-            </div>
         </div>
         <div class="sidebar">
             <div class = "top__container">
@@ -32,12 +90,20 @@
             <div class = "middle__container">
                 <div class = "channel__header">
                     <h1>Channels</h1>
-                    <a href = "#" class="fas fa-plus-circle"></a>
+                    <a class="fas fa-plus-circle createChannel"></a>
                 </div>
-
                 <div class = "channels__container">
-                    <a class = "channel"><i class="fas fa-hashtag"></i>Patrik</a>
+                    <% channels.forEach(channel => { %>
+                        <a id = "<%= channel._id%>" class = "channel"><i class="fas fa-hashtag"></i><%= channel.name %></a>
+                    <% }) %>
                 </div>
+                <div class = "directMessage__header">
+                        <h1>Direct Messages</h1>
+                        <a class="fas fa-plus-circle createDirectMessage"></a>
+                    </div>
+                    <div class = "directMessage__container">
+                        <a class = "directMessage">Patrik</a>
+                    </div>
             </div>
         </div>
 
@@ -62,11 +128,11 @@
             <button type="submit" id="send-btn">Send</button>
         </form>
     </div>
-    </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="/javascript/chat.js"></script>
-
+    <script src="/javascript/sidebar.js"></script>
+    <script src= "/javascript/channels.js"></script>
 </body>
 
 </html>

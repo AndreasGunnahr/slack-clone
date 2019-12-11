@@ -3,9 +3,10 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  let errorMessage = req.session.error
-  let successMessage = req.session.success;
-  res.render('index',{error: errorMessage, success: successMessage});
+  res.render('index', {
+    error: req.flash('error'),
+    success: req.flash('success')
+  });
 });
 
 module.exports = router;

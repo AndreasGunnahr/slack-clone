@@ -4,6 +4,7 @@ const messageForm = document.getElementById('send')
 const messageInput = document.getElementById('input')
 //let username = document.getElementById('username').innerText;
 
+<<<<<<< HEAD
 
 var today = new Date()
 var time = today.getHours() + ":" + today.getMinutes()
@@ -14,6 +15,8 @@ const name = "ydehed"
 
 socket.emit('new-user', name)
 
+=======
+>>>>>>> 10ada12b78a6a857a4849f2fa4e5ceeeca21c179
 socket.emit('new-user', name)
 
 socket.on('chat-message', data => {
