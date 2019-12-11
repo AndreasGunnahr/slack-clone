@@ -13,7 +13,6 @@ router.get('/', async function(req, res, next) {
         error: req.session.error,
         status: req.session.status || true
      });
-    //  console.log(req.session.status);
 });
 
 /* Create a new Channel route */ 
@@ -44,5 +43,6 @@ router.post('/new-channel', function (req, res, next) {
         });
     });
 });
+
 
 module.exports = router;

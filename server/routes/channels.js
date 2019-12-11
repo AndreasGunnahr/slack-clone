@@ -3,8 +3,9 @@ var router = express.Router()
 
 /* Import database models */ ;
 const Channels = require('../models/channels')
+const Messages = require('../models/messages')
 
-/* GET all Channels information */
+/* GET all Channels information from each user ID. */
 router.get('/:id', function (req, res, next){
     const userID = req.params.id;
     Channels.find({createdByUserID: userID}, function(err, data) {   
@@ -33,13 +34,25 @@ router.post('/new-channel', function (req, res, next) {
                     }
                 });
                 res.status(201).json({ status: true, success: "Channel created!" });
-                console.log("CHANNEL MADE!")
             }catch{
                 res.status(500).send();
             }
         }
         else{
             res.status(400).json({ status: false, error: "Channel name is already taken." });
+        }
+    });
+});
+
+/* GET all messages to the specific channel. */
+router.get('/messages/:id', function (req, res, next) {
+    const clickedChannelID = req.params.id;
+    Messages.find({channelID: clickedChannelID},{'_id': 0, 'username': 1, 'time': 1, 'text': 1}, function(err, data) {   
+        if(err){
+            res.status(500).send();
+        }
+        else{
+            res.send(data);
         }
     });
 });

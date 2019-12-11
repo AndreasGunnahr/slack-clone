@@ -4,7 +4,7 @@
 <head>
     <title>Socket.IO chat</title>
 
-    <link rel="stylesheet" href="stylesheets/chat-style.css">
+    <link rel="stylesheet" href="/stylesheets/chat-style.css">
     <script src="https://kit.fontawesome.com/fca6d7d29b.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
 </head>
@@ -94,7 +94,7 @@
                 </div>
                 <div class = "channels__container">
                     <% channels.forEach(channel => { %>
-                        <a class = "channel"><i class="fas fa-hashtag"></i><%= channel.name %></a>
+                        <a id = "<%= channel._id%>" class = "channel"><i class="fas fa-hashtag"></i><%= channel.name %></a>
                     <% }) %>
                 </div>
                 <div class = "directMessage__header">
@@ -118,13 +118,11 @@
             <button type="submit" id="send-btn">Send</button>
         </form>
     </div>
-    </div>
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="/javascript/chat.js"></script>
     <script src="/javascript/sidebar.js"></script>
-    <!-- <script src="/javascript/search.js"></script> -->
-
+    <script src= "/javascript/channels.js"></script>
 </body>
 
 </html>

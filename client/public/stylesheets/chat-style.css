@@ -45,7 +45,6 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   background: white;
-<<<<<<< HEAD
   padding: 30px;
   border-radius: 10px;
   z-index: 30;
@@ -100,17 +99,6 @@ body {
         font-size: 1.4rem; }
         #createChannel__container .createChannel__form .createButton__container #createChannelBtn:hover {
           cursor: pointer; }
-=======
-  overflow-y: scroll;
-  padding: 15px;
-  font-size: 1.4rem;
-  margin-bottom: 9rem;
-}
-
-.grid-container .text #messages {
-  padding: 10px;
-}
->>>>>>> 1aa076e4f9d3bfaae2c1171603e2a78503b30c69
 
 #createDirectMessage__container {
   display: none;
@@ -121,7 +109,6 @@ body {
   background: white;
   padding: 30px;
   border-radius: 10px;
-<<<<<<< HEAD
   z-index: 30;
   width: 100%;
   max-width: 920px; }
@@ -211,11 +198,6 @@ body {
           #createDirectMessage__container .inner__container table tbody tr:hover {
             background: lightgrey;
             cursor: pointer; }
-=======
-  font-family: "Lato", sans-serif;
-  font-size: 1.4rem;
-}
->>>>>>> 1aa076e4f9d3bfaae2c1171603e2a78503b30c69
 
 .grid-container {
   position: relative;
@@ -288,7 +270,9 @@ body {
         .grid-container .sidebar .middle__container .directMessage__container .channel,
         .grid-container .sidebar .middle__container .directMessage__container .directMessage {
           padding: 5px 0px 5px 10px;
-          width: 100%; }
+          width: 100%;
+          text-decoration: none;
+          color: white; }
           .grid-container .sidebar .middle__container .channels__container .channel .fa-hashtag,
           .grid-container .sidebar .middle__container .channels__container .directMessage .fa-hashtag,
           .grid-container .sidebar .middle__container .directMessage__container .channel .fa-hashtag,
@@ -298,8 +282,12 @@ body {
           .grid-container .sidebar .middle__container .channels__container .directMessage:hover,
           .grid-container .sidebar .middle__container .directMessage__container .channel:hover,
           .grid-container .sidebar .middle__container .directMessage__container .directMessage:hover {
-            background: darkblue;
             cursor: pointer; }
+          .grid-container .sidebar .middle__container .channels__container .channel.active,
+          .grid-container .sidebar .middle__container .channels__container .directMessage.active,
+          .grid-container .sidebar .middle__container .directMessage__container .channel.active,
+          .grid-container .sidebar .middle__container .directMessage__container .directMessage.active {
+            background: rgba(0, 0, 0, 0.2); }
         .grid-container .sidebar .middle__container .channels__container .directMessage:before,
         .grid-container .sidebar .middle__container .directMessage__container .directMessage:before {
           content: '';
@@ -321,7 +309,8 @@ body {
     background: white;
     overflow-y: scroll;
     padding: 15px;
-    font-size: 1.4rem; }
+    font-size: 1.4rem;
+    margin-bottom: 9rem; }
     .grid-container .text #messages {
       padding: 10px; }
   .grid-container #send {
@@ -337,7 +326,9 @@ body {
       height: 60px;
       width: 90%;
       border: 1px solid gray;
-      border-radius: 10px; }
+      border-radius: 10px;
+      font-family: "Lato", sans-serif;
+      font-size: 1.4rem; }
     .grid-container #send button {
       margin-top: 20px;
       height: 60px;
