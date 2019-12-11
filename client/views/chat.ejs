@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Socket.IO chat</title>
+
+    <link rel="stylesheet" href="stylesheets/chat-style.css">
+    <script src="https://kit.fontawesome.com/fca6d7d29b.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+</head>
+
+<body>
+    <div class="grid-container">
+        <div class="header">
+
+        </div>
+        <div class = "createRoom__container">
+            <h1>Create a channel</h1>
+            <p>Channels are where your team communicates. They’re best when organized around a topic — #marketing, for example.</p>
+            <label for = "name"></label>
+            <div class = "input__container">
+                <input name = "name" placeholder="#   e.g. plan-budget">
+                <label for = "description">Description <span>(Optional)</span></label>
+                <input name = "description">
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class = "top__container">
+                <h1 id = "group__name">GRUPP NAMN</h1>
+                <h2 id = "username"><%= username %></h2>
+            </div>
+            <div class = "middle__container">
+                <div class = "channel__header">
+                    <h1>Channels</h1>
+                    <a href = "#" class="fas fa-plus-circle"></a>
+                </div>
+
+                <div class = "channels__container">
+                    <a class = "channel"><i class="fas fa-hashtag"></i>Patrik</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="text">
+            <!-- You joined as <%= username %> -->
+
+            <ul class="messages">
+                <div class="text-container">
+                    <div class="title">
+                      <p class="chat-name">Philip Lagergren Ydehed <span class="chat-time">21:04</span> </p>  
+                       
+                    </div>
+                    <div class="chat-message">
+                        <p>Jag programmerade idag</p>
+                    </div>
+                </div>
+            </ul>
+        </div>
+
+        <form id="send">
+            <input type="text" id="input" name="msgVal" autocomplete="off" />
+            <button type="submit" id="send-btn">Send</button>
+        </form>
+    </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascript/chat.js"></script>
+
+</body>
+
+</html>
