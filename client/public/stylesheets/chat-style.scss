@@ -106,11 +106,35 @@ body {
         padding: 15px;
         font-size: 1.4rem;
         margin-bottom: 9rem;
-        #messages {
-            padding: 10px;
+        .messages {
+            padding: 0px;
+            
         
+            .text-container{
+                margin-top: 1rem;
+                .title{
+                    .chat-name{
+                        font-size: 1.5rem;
+                        font-family: $header-font;
+
+                        .chat-time{
+                            color: $grey;
+                            font-size: 1.3rem;
+                            font-family: $time-font;
+                            margin-left: 0.4rem;
+                        }
+                    }
+                    
+                }
+                .chat-message{
+                    font-size: 1.5rem;
+                    
+                }
+            }
         }
+       
     }
+
     #send {
         grid-row: 10/11;
         grid-column: 2;
@@ -125,7 +149,7 @@ body {
             width: 90%;
             border: 1px solid gray;
             border-radius: 10px;
-            font-family: $chat-font;
+            font-family: $text-font;
             font-size: 1.4rem;
         }
         
