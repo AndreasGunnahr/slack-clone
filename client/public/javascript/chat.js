@@ -15,15 +15,15 @@ const name = "ydehed"
 socket.emit('new-user', name)
 
 socket.on('chat-message', data => {
-    appendMessage(`${data.message}`)
+    sendMessage(`${data.message}`)
 })
 
 socket.on('user-connected', name => {
-    appendMessage( `${name} connected`)
+    sendMessage( `${name} connected`)
 })
 
 socket.on('user-disconnected', name => {
-    appendMessage(` ${name} disconnected`)
+    sendMessage(` ${name} disconnected`)
 })
 
 //is typing.. 
@@ -59,7 +59,7 @@ messageForm.addEventListener('submit', e => {
     e.preventDefault()
     const message = messageInput.value
     // var messageString = ` ${message}`
-    appendMessage(message)
+    sendMessage(message)
     socket.emit('send', message)
     messageInput.value = ''
     messageContainer.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"})
@@ -67,7 +67,7 @@ messageForm.addEventListener('submit', e => {
 
 
 
-function appendMessage(message) {
+function sendMessage(message) {
     
     const messageDiv = document.createElement('div')
     
