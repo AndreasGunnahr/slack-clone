@@ -3,6 +3,9 @@ const showDirectMessageContainer = document.getElementsByClassName('createDirect
 const createChannelContainer = document.getElementById("createChannel__container")
 const createDirectMessageContainer = document.getElementById("createDirectMessage__container");
 const overlay = document.getElementsByClassName('overlay')[0];
+const errorText = document.getElementById('createChannel__error');
+const successText = document.getElementById('createChannel__success');
+
 const exitBtn = document.querySelectorAll('.fa-times');
 
 showChannelContainer.addEventListener('click', () => {
@@ -19,6 +22,8 @@ overlay.addEventListener('click', () => {
     createChannelContainer.style.display = "none";
     createDirectMessageContainer.style.display = "none";
     overlay.style.display = "none";
+    errorText.innerText = "";
+    successText.innerText = "";
 })
 
 exitBtn.forEach(btn => {
@@ -26,6 +31,8 @@ exitBtn.forEach(btn => {
         createChannelContainer.style.display = "none";
         createDirectMessageContainer.style.display = "none";
         overlay.style.display = "none";
+        errorText.innerText = "";
+        successText.innerText = "";
     })
 });
 

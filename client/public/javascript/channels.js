@@ -1,5 +1,28 @@
 const channels = document.querySelectorAll('.channel');
 const chatMessages = document.getElementById('messages');
+const createChannelInput = document.getElementsByClassName("createChannel__input")[0];
+const createChannelBtn = document.getElementById('createChannelBtn');
+
+
+/* Checking against the DB if the room name is available for the current user */ 
+createChannelInput.addEventListener('input', (e) => {
+    const searchValue = e.target.value;
+    $.ajax({
+        url: 'http://localhost:3000/chat/check-new-channel',
+        method: 'POST',
+        data: {'searchChannel': searchValue}
+    }).done(function (data) {
+        if(!data.status){
+            errorText.innerText = data.error;
+            successText.innerText = "";
+            createChannelBtn.disabled = true;
+        }else{
+            successText.innerText = data.success;
+            errorText.innerText = "";
+            createChannelBtn.disabled = false;
+        }
+    })
+});
 
 channels.forEach(channel => {
     channel.addEventListener('click', (e) => {

@@ -71,6 +71,14 @@ body {
             margin-top: 5px;
             color: $grey;
         }
+        #createChannel__error{
+            font-size: 1.6rem;
+            color: red;
+        }
+        #createChannel__success{
+            font-size: 1.6rem;
+            color: green;
+        }
         .createButton__container{
             width: 100%;
             display: flex;

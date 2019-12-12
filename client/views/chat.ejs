@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/stylesheets/chat-style.css">
     <script src="https://kit.fontawesome.com/fca6d7d29b.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -19,10 +20,12 @@
         <label for = "name"></label>
         <form class = "createChannel__form" method = "POST" action = "/chat/new-channel">
             <label for = "name">Name </label>
-            <input class = "createChannel__input" name = "name" placeholder="#   e.g. plan-budget">
+            <input class = "createChannel__input" name = "name" placeholder="#   e.g. plan-budget" autocomplete="off">
             <label for = "description">Description <span>(Optional)</span></label>
-            <input class = "createChannel__input" name = "description">
+            <input class = "createChannel__input" name = "description" autocomplete="off">
             <span>What's this channel about?</span>
+            <span id = "createChannel__error"></span>
+            <span id = "createChannel__success"></span>
             <div class = "createButton__container">
                 <input type = "submit" id = "createChannelBtn" value = "Create"></input>
             </div>
@@ -47,7 +50,7 @@
                     <% allUsers.forEach(user => { %>
                     <tr>
                         <td>
-                            <a href = "/chat/new-directMessage" class = "directMessage"><%= user.username%></a>
+                            <a id = "<%= user._id %>" class = "directMessage"><%= user.username%></a>
                         </td>
                     </tr>
                     <% }) %>
@@ -81,6 +84,9 @@
                     <a class="fas fa-plus-circle createDirectMessage"></a>
                 </div>
                 <div class = "directMessage__container">
+                    <% directMessages.forEach(directMessage => { %>
+                        <a id = "<%= directMessage._id%>" class = "directMessage"><%= directMessage.username %></a>
+                    <% }) %>
                 </div>
             </div>
         </div>
@@ -101,6 +107,7 @@
     <script src="/javascript/chat.js"></script>
     <script src="/javascript/sidebar.js"></script>
     <script src= "/javascript/channels.js"></script>
+    <script src= "/javascript/messages.js"></script>
 </body>
 
 </html>

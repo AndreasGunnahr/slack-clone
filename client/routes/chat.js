@@ -7,16 +7,40 @@ router.get('/', async function(req, res, next) {
     const id = req.session.activeUser.id;
     const responseChannels = await fetch('http://localhost:5000/channels/' + id )
     const allChannels = await responseChannels.json()
+    const responseDirectMessage = await fetch('http://localhost:5000/channels/directMessage/' + id )
+    const allDirectMessage = await responseDirectMessage.json()
     const responseUsers = await fetch('http://localhost:5000/users');
     const allUsers = await responseUsers.json()
     res.render('chat', {
         username: req.session.activeUser.username, 
         channels: allChannels,
+        directMessages: allDirectMessage,
         allUsers: allUsers,
-        error: req.session.error,
-        status: req.session.status || true
      });
 });
+
+router.post('/check-new-channel', function (req, res, next) {
+    const searchValue = {
+        createdByUserID: req.session.activeUser.id,
+        channelSearchValue: req.body.searchChannel
+    }
+    const option = {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(searchValue) 
+
+    };
+    
+    fetch("http://localhost:5000/channels/check-new-channel", option)
+    .then(response => {
+        response.json().then(function(data) {
+            res.send(data);
+        });
+    });
+});
+
 
 /* Create a new Channel route */ 
 router.post('/new-channel', function (req, res, next) {
@@ -31,7 +55,7 @@ router.post('/new-channel', function (req, res, next) {
     headers: {
         "Content-Type": "application/json"
     },
-    body: JSON.stringify(newChannel) 
+    body: JSON.stringify(channelSearchValue) 
 
     };
     
@@ -40,17 +64,37 @@ router.post('/new-channel', function (req, res, next) {
         response.json().then(function(data) {
             if(data.status){
                 res.redirect('/chat');
-            }else{
-               res.redirect('/chat');
             }
         });
     });
 });
 
 /* Create a new Direct Message route */ 
-router.get('/new-directMessage', function (req, res, next) {
-    console.log(req.body)
-    res.redirect('/chat');
+router.post('/new-directMessage', function (req, res, next) {
+    const clickedUser = {
+        createdByUserID: req.session.activeUser.id,
+        selectedUserID: req.body.id,
+        username:  req.body.username
+    }
+    const option = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(clickedUser)
+    
+    };
+        
+    fetch("http://localhost:5000/channels/new-directMessage", option)
+    .then(response => {
+        response.json().then(function(data) {
+            if(data.status){
+                res.redirect('/chat');
+            }else{
+                res.redirect('/chat');
+            }
+        });
+    });
     
 });
 

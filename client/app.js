@@ -32,8 +32,6 @@ app.use(sassMiddleware({
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
-
-
 /* Import client routes */ 
 var IndexRouter = require('./routes/index');
 var LoginRouter = require('./routes/login');
