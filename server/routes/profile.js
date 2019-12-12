@@ -32,7 +32,7 @@ router.post('/profiles/upload', function(req, res, next){
 }).catch(next);
 })
 
-/*router.post('/profiles/delete', function(req, res, next){
+router.post('/profiles/delete', function(req, res, next){
     const id = { _id: req.body.id };
     const image = { image: req.body.image};
     Profile.findByIdAndUpdate(id, image).then(function(){
@@ -40,7 +40,7 @@ router.post('/profiles/upload', function(req, res, next){
         res.send(profile);
     });
 }).catch(next);
-})*/
+})
 
 
 

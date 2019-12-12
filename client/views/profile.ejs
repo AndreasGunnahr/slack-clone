@@ -6,16 +6,36 @@
 </head>
 <body>
     <div class="container">
-        <div class="profile">
+        <div class="profilePic">
+            <p>Profile photo</p>
             <img src="<%= typeof file != 'undefined' ? file : defaultPicture %>">
             <form action="/upload" method="POST" enctype="multipart/form-data">
-                <label for="btn" class="btn">Upload an image </label>
+                <label for="btn" class="btn pic">Upload an image </label>
                 <input id="btn" name="profilePicture" type="file" onchange="this.form.submit()" accept="image/png, image/jpeg" style="visibility: hidden;">
             </form>
             <form action="/delete" method="POST" enctype="multipart/form-data">
-                <label for="up" class="btn">Delete image </label>
+                <label for="up" class="btn dlt">Delete image </label>
                 <input id="up" type="submit" onchange="this.form.submit()" class="btn" style="visibility: hidden;">
             </form>
+        </div>
+        <div class="profileInfo">
+                <form action="/saveChanges" method="POST" enctype="multipart/form-data">
+                    <div class="updateInfo">
+                        <div>
+                            <label for="name">Full name</label><br>
+                            <input name="name" type="name">
+                        </div>
+                        <div>
+                            <label for="email">Email</label><br>
+                            <input name="email" type="email">
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn cncel">Cancel</button>
+                        <label for="info" class="btn update">Save changes</label>
+                        <input id="info" type="submit" onchange="this.form.submit()" class="btn" style="visibility: hidden;">
+                    </div>
+                </form>
         </div>
     </div>
     

@@ -88,7 +88,7 @@ router.post('/upload', function(req, res, next) {
 });
 
 
-/*router.post('/delete', function(req, res, next){
+router.post('/delete', function(req, res, next){
     const profile = {
         id: req.session.activeUserInfo.id,
         image: 'uploads/defaultPicture.png'
@@ -108,6 +108,6 @@ router.post('/upload', function(req, res, next) {
     res.render('profile', {
         defaultPicture: 'uploads/defaultPicture.png'
     })
-})*/
+})
 
 module.exports = router;
