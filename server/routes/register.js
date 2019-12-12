@@ -24,7 +24,7 @@ router.post('/', function (req, res, next) {
                         res.status(500).send();
                     }
                 });
-                res.status(201).json({ status: true, error: "Account created!", success: "Account created!" });
+                res.status(201).json({ status: true, success: "Account created!" });
             }catch{
                 res.status(500).send();
             }

@@ -2,15 +2,16 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
-const bodyParser = require('body-parser')
 const app = express();
 const port = 5000;
+const bodyParser = require('body-parser')
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 
-app.use(bodyParser.json());
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 
 
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
 // app.use(express.json());
 // app.use(express.urlencoded({ extended: false }));
 app.use(cors());
@@ -21,22 +22,28 @@ mongoose.connect('mongodb://localhost/profilego', {useUnifiedTopology: true, use
 .then(() => console.log('Connected to database'))
 .catch(err => console.log(`Failed to connect to database - Error: ${err.message}`));
 
-
 /* Import server/API routes */
-const validateLoginRouter = require('./routes/validateLogin');
-const validateRegisterRouter = require('./routes/validateRegister');
+const LoginRouter = require('./routes/login');
+const RegisterRouter = require('./routes/register');
+const ChannelsRouter = require('./routes/channels');
+const UsersRouter = require('./routes/users');
+// const MessagesRouter = require('./routes/messages');
+
 
 /* Import server/API routes */ 
 
 /* Setting server to use our API routes */ 
-// app.use()
 app.use('/api', require('./routes/profile'));
-app.use('/login',validateLoginRouter); 
-app.use('/register', validateRegisterRouter);
+app.use('/login', LoginRouter); 
+app.use('/register', RegisterRouter);
+app.use('/channels', ChannelsRouter);
+// app.use('/messages', MessagesRouter);
+app.use('/users', UsersRouter);
+
+
  
 
 
-
-app.listen(port, () => console.log(`Server listening on port ${port}`));
+http.listen(port, () => console.log(`Client listening on port ${port}!`));
 
 module.exports = app;

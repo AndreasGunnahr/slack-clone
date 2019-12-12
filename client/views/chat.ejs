@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Socket.IO chat</title>
+
+    <link rel="stylesheet" href="/stylesheets/chat-style.css">
+    <script src="https://kit.fontawesome.com/fca6d7d29b.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class = "overlay"></div>
+    
+    <div id = "createChannel__container">
+        <a class="fas fa-times"></a>
+        <h1>Create a channel</h1>
+        <p>Channels are where your team communicates. They’re best when organized around a topic — #marketing, for example.</p>
+        <label for = "name"></label>
+        <form class = "createChannel__form" method = "POST" action = "/chat/new-channel">
+            <label for = "name">Name </label>
+            <input class = "createChannel__input" name = "name" placeholder="#   e.g. plan-budget" autocomplete="off">
+            <label for = "description">Description <span>(Optional)</span></label>
+            <input class = "createChannel__input" name = "description" autocomplete="off">
+            <span>What's this channel about?</span>
+            <span id = "createChannel__error"></span>
+            <span id = "createChannel__success"></span>
+            <div class = "createButton__container">
+                <input type = "submit" id = "createChannelBtn" value = "Create"></input>
+            </div>
+        </form>
+    </div>
+  
+    <div id = "createDirectMessage__container">
+        <a class="fas fa-times"></a>
+        <div class = "inner__container">
+            <h1>Direct Messages</h1>
+            <form class = "createDirectMessage__form" method = "POST" action = "/search">
+                <input class = "createDirectMessage__input" name = "search" placeholder = "Find or start a conversation">
+                <!-- <input type = "button" id = "createDirectMessageBtn" value = "Go"> -->
+            </form>
+            <table>
+                <thead>
+                    <tr>
+                        <td>List of all users</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% allUsers.forEach(user => { %>
+                    <tr>
+                        <td>
+                            <a id = "<%= user._id %>" class = "directMessage"><%= user.username%></a>
+                        </td>
+                    </tr>
+                    <% }) %>
+                </tbody>                   
+            </table>
+        </div>
+    </div>
+
+    
+    <div class="grid-container">
+        <div class="header">
+
+        </div>
+        <div class="sidebar">
+            <div class = "top__container">
+                <h1 id = "group__name">GRUPP NAMN</h1>
+                <h2 id = "username"><%= username %></h2>
+            </div>
+            <div class = "middle__container">
+                <div class = "channel__header">
+                    <h1>Channels</h1>
+                    <a class="fas fa-plus-circle createChannel"></a>
+                </div>
+                <div class = "channels__container">
+                    <% channels.forEach(channel => { %>
+                        <a id = "<%= channel._id%>" class = "channel"><i class="fas fa-hashtag"></i><%= channel.name %></a>
+                    <% }) %>
+                </div>
+                <div class = "directMessage__header">
+                    <h1>Direct Messages</h1>
+                    <a class="fas fa-plus-circle createDirectMessage"></a>
+                </div>
+                <div class = "directMessage__container">
+                    <% directMessages.forEach(directMessage => { %>
+                        <a id = "<%= directMessage._id%>" class = "directMessage"><%= directMessage.username %></a>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+
+        <div class="text">
+            You joined as <%= username %>
+
+            <ul id="messages"></ul>
+        </div>
+
+        <form id="send">
+            <input type="text" id="input" name="msgVal" autocomplete="off" />
+            <button type="submit" id="send-btn">Send</button>
+        </form>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/javascript/chat.js"></script>
+    <script src="/javascript/sidebar.js"></script>
+    <script src= "/javascript/channels.js"></script>
+    <script src= "/javascript/messages.js"></script>
+</body>
+
+</html>
+
+
+

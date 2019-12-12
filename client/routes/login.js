@@ -19,12 +19,11 @@ router.post('/', function (req, res, next) {
     fetch("http://localhost:5000/login", option)
     .then(response => {
         response.json().then(function(data) {
-            
             if(data.status){
-                req.session.activeUserInfo = data;
-                res.redirect('/dashboard');
-            }else{
-                req.session.error = data.error;
+                req.session.activeUser = data;
+                res.redirect('/chat');
+            }else{ 
+                req.flash('error', data.error)
                 res.redirect('/');
             }
         });
