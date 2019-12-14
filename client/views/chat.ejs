@@ -12,13 +12,35 @@
 
 <body>
     <div class = "overlay"></div>
+
+    <div id = "showChannels__container">
+        <a class="fas fa-times"></a>
+        <h1>Join a channel</h1>
+        <div class = "inner__container">
+            <table>
+                <thead>
+                    <tr>
+                        <td>List of all channels</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class = "table-row-all-channels">
+                        <!-- <td>
+                            <a class = "channels">Andreas</a>
+                            <input type = "button" value = "Join">
+                        </td> -->
+                    </tr>
+                </tbody>                   
+            </table>
+        </div>
+    </div>
     
     <div id = "createChannel__container">
         <a class="fas fa-times"></a>
         <h1>Create a channel</h1>
         <p>Channels are where your team communicates. They’re best when organized around a topic — #marketing, for example.</p>
         <label for = "name"></label>
-        <form class = "createChannel__form" method = "POST" action = "/chat/new-channel">
+        <form class = "createChannel__form">
             <label for = "name">Name </label>
             <input class = "createChannel__input" name = "name" placeholder="#   e.g. plan-budget" autocomplete="off">
             <label for = "description">Description <span>(Optional)</span></label>
@@ -36,10 +58,10 @@
         <a class="fas fa-times"></a>
         <div class = "inner__container">
             <h1>Direct Messages</h1>
-            <form class = "createDirectMessage__form" method = "POST" action = "/search">
-                <input class = "createDirectMessage__input" name = "search" placeholder = "Find or start a conversation">
-                <!-- <input type = "button" id = "createDirectMessageBtn" value = "Go"> -->
+            <form class = "createDirectMessage__form">
+                <input class = "createDirectMessage__input" name = "search" placeholder = "Find or start a conversation" autocomplete="off">
             </form>
+            <span id = "createDirectMessage__error"></span>
             <table>
                 <thead>
                     <tr>
@@ -48,7 +70,7 @@
                 </thead>
                 <tbody>
                     <% allUsers.forEach(user => { %>
-                    <tr>
+                    <tr class = "table-row">
                         <td>
                             <a id = "<%= user._id %>" class = "directMessage"><%= user.username%></a>
                         </td>
@@ -66,8 +88,11 @@
         </div>
         <div class="sidebar">
             <div class = "top__container">
-                <h1 id = "group__name">GRUPP NAMN</h1>
+                <h1 id = "group__name">WEBB19</h1>
                 <h2 id = "username"><%= username %></h2>
+            </div>
+            <div class = "setting__container">
+                <a id = "joinChannelBtn"><i class="fas fa-comments"></i>Join channel</a>
             </div>
             <div class = "middle__container">
                 <div class = "channel__header">
@@ -85,15 +110,13 @@
                 </div>
                 <div class = "directMessage__container">
                     <% directMessages.forEach(directMessage => { %>
-                        <a id = "<%= directMessage._id%>" class = "directMessage"><%= directMessage.username %></a>
+                        <a id = "<%= directMessage._id%>" class = "createdDirectMessage"><%= directMessage.username %></a>
                     <% }) %>
                 </div>
             </div>
         </div>
 
         <div class="text">
-            You joined as <%= username %>
-
             <ul id="messages"></ul>
         </div>
 
@@ -104,10 +127,11 @@
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script src="/javascript/chat.js"></script>
     <script src="/javascript/sidebar.js"></script>
     <script src= "/javascript/channels.js"></script>
+    <script src= "/javascript/search.js"></script>
     <script src= "/javascript/messages.js"></script>
+    <script src="/javascript/chat.js"></script>
 </body>
 
 </html>

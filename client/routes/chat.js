@@ -15,8 +15,18 @@ router.get('/', async function(req, res, next) {
         username: req.session.activeUser.username, 
         channels: allChannels,
         directMessages: allDirectMessage,
-        allUsers: allUsers,
+        allUsers: allUsers
      });
+});
+
+// /* Re render */
+// router.get('')
+
+router.get('/all-channels', async function(req, res, next){
+    const userID = req.session.activeUser.id;
+    const responseAllChannels = await fetch('http://localhost:5000/channels/join/' + userID);
+    const allChannels = await responseAllChannels.json();
+    res.send(allChannels);
 });
 
 router.post('/check-new-channel', function (req, res, next) {
@@ -55,7 +65,7 @@ router.post('/new-channel', function (req, res, next) {
     headers: {
         "Content-Type": "application/json"
     },
-    body: JSON.stringify(channelSearchValue) 
+    body: JSON.stringify(newChannel) 
 
     };
     
@@ -63,11 +73,36 @@ router.post('/new-channel', function (req, res, next) {
     .then(response => {
         response.json().then(function(data) {
             if(data.status){
-                res.redirect('/chat');
+                console.log(data)
+                res.send(data);
             }
         });
     });
 });
+
+
+/* Display available users in direct Message search. */ 
+router.post('/check-new-directMessage', function (req, res, next) {
+    const searchValue = {
+        search: req.body.searchDirectMessage
+    }
+    const option = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(searchValue)
+    
+    };
+    fetch("http://localhost:5000/channels/check-new-directMessage", option)
+    .then(response => {
+        response.json().then(function(data) {
+            res.send(data);
+        });
+    });
+    
+});
+
 
 /* Create a new Direct Message route */ 
 router.post('/new-directMessage', function (req, res, next) {
@@ -89,9 +124,9 @@ router.post('/new-directMessage', function (req, res, next) {
     .then(response => {
         response.json().then(function(data) {
             if(data.status){
-                res.redirect('/chat');
+                res.json(data);
             }else{
-                res.redirect('/chat');
+                res.json(data);
             }
         });
     });

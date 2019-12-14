@@ -32,44 +32,37 @@ app.use(sassMiddleware({
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
+
 /* Import client routes */ 
 var IndexRouter = require('./routes/index');
 var LoginRouter = require('./routes/login');
 var RegisterRouter = require('./routes/register');
 var ChatRouter = require('./routes/chat');
-// var CreateChannelRouter = require('./routes/createChannel');
-// var CreateDirectMessageRouter = require('./routes/createDirectMessage');
-
 
 /* Setting client to use our routes */ 
 app.use('/', IndexRouter);
 app.use('/chat', ChatRouter);
 app.use('/login', LoginRouter);
 app.use('/register', RegisterRouter);
-// app.use('/chat/new-directMessage', CreateDirectMessageRouter);
 
 
 
 // users = {};
 /* Settings for our socket.io connection */ 
-// io.on('connection', function (socket) {
-//   socket.on('new-user', name => {
-//       users[socket.id] = name;
-//       socket.broadcast.emit('user-connected', name);
-//     })
-//     socket.on('send', message => {
-//       socket.broadcast.emit('chat-message', { message: message, name: users[socket.id] });
-//     })
-//     socket.on('disconnect', () => {
-//       socket.broadcast.emit('user-disconnected', users[socket.id]);
-//       delete users[socket.id];
-//     });
-//   console.log( 'a user connected');
-// });
+io.on('connection', function (socket) {
+  // socket.emit('news', { hello: 'world' });
 
+  socket.on('join', function(data){
+    socket.join(data.channelID);
+    socket.on('message', function(test){
+      io.to(data.channelID).emit('message','andreas');
+    })
+
+    // const channelID = data.channelID; 
+  });
+});
 
 http.listen(port, () => console.log(`Client listening on port ${port}!`));
-
 
 
 module.exports = app;
