@@ -16,7 +16,7 @@
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "express-session": "^1.17.0",
-    "mongoose": "^5.7.13",
+    "mongoose": "^5.8.0",
     "mongoose-unique-validator": "^2.0.3",
     "node": "^13.3.0",
     "node-fetch": "^2.6.0",
