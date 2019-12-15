@@ -17,7 +17,10 @@ body {
     z-index: 2;
 }
 
-#showChannels__container{
+
+#showMembers__container,
+#showChannels__container,
+#createChannel__container{
     display: none;
     position: absolute; 
     top: 50%;
@@ -41,9 +44,42 @@ body {
         font-size: 2.5rem;
     }
     p{  
-        font-size: 1.4rem;
         margin-top: 10px;
     }
+}
+
+#showMembers__container{
+    h1{
+        i{
+            padding-right: 7.5px;
+        }
+    }
+    .inner__container{
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+        h1{ 
+            display: flex;
+            align-items: center;
+            font-family: $chat-font;
+            font-size: 1.8rem;
+            &:before{
+                content: '';
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                -moz-border-radius: 7.5px;
+                -webkit-border-radius: 7.5px;
+                border-radius: 7.5px;
+                background-color: $green;
+                margin-right: 5px;
+            }
+        }
+    }
+}
+
+#showChannels__container{
     .inner__container{
         width: 100%;
         display: flex;
@@ -103,32 +139,6 @@ body {
 }
 
 #createChannel__container{
-    display: none;
-    position: absolute; 
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: $white;
-    padding: 30px;
-    border-radius: 10px;
-    z-index: 30;
-    width: 100%;
-    max-width: 520px;
-    .fa-times{
-        float: right;
-        font-size: 2.5rem;
-        color: $grey;
-        &:hover{
-            cursor: pointer;
-        }
-    }
-    h1{
-        font-size: 2.5rem;
-    }
-    p{  
-        font-size: 1.4rem;
-        margin-top: 10px;
-    }
     .createChannel__form{
         display: flex;
         flex-direction: column;
@@ -319,6 +329,35 @@ body {
         background: white;
         border: 1px grey;
         border-style: hidden hidden solid hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .header__container{
+            padding-left: 20px;
+           #header__name{
+                font-size: 2rem;
+                font-family: $header-font;
+           }
+           .icon__container{
+                margin-top: 5px;
+                a{
+                    font-size: 1.5rem;
+                    font-family: $chat-font;
+                    color: $grey;
+                    i{  
+                        padding: 0 5px 0 5px;
+                    }
+                    &:after{
+                        content: '|';
+                        color: $grey;
+                        padding-left: 5px;
+                    }
+                    &:hover{
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
     }
     .sidebar {
         @extend %flex-column;

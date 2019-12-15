@@ -9,6 +9,7 @@ const sassMiddleware = require('node-sass-middleware');
 var session = require('express-session');
 var flash = require('connect-flash');
 
+
 /* View engine setup */ 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -46,20 +47,55 @@ app.use('/login', LoginRouter);
 app.use('/register', RegisterRouter);
 
 
-
-// users = {};
-/* Settings for our socket.io connection */ 
+var usernameIDS = {};
+var users;
 io.on('connection', function (socket) {
-  // socket.emit('news', { hello: 'world' });
+  var currentChannel, username, nrOfUsers, socketID;
+  let clientList;
 
-  socket.on('join', function(data){
-    socket.join(data.channelID);
-    socket.on('message', function(test){
-      io.to(data.channelID).emit('message','andreas');
-    })
-
-    // const channelID = data.channelID; 
+  socket.on('reset_users_channel', (data) => {
+    users = [];
+    usernameIDS[data.socketID] = data.username;
+    Object.keys(socket.rooms).forEach(function(roomName){
+      if(io.sockets.adapter.rooms[roomName]){
+        socket.leave(roomName)
+        if (io.sockets.adapter.rooms[roomName]){
+          nrOfUsers = io.sockets.adapter.rooms[roomName].length;
+          clientList = Object.keys(io.sockets.adapter.rooms[roomName].sockets) 
+          for(let x = 0; x < nrOfUsers; x++){
+            users.push(usernameIDS[clientList[x]])
+          }
+          io.in(roomName).emit('numberOfUsers', {numberOfUsers: nrOfUsers, memberList: users})
+        }
+      }
+    });
   });
+
+  socket.on('join_channel', (data) => {
+    users = [];
+    currentChannel = data.channelID
+    socket.join(currentChannel);
+    if (io.sockets.adapter.rooms[currentChannel]){
+      nrOfUsers = io.sockets.adapter.rooms[currentChannel].length;
+      clientList = Object.keys(io.sockets.adapter.rooms[currentChannel].sockets) 
+      for(let x = 0; x < nrOfUsers; x++){
+        users.push(usernameIDS[clientList[x]])
+      }
+      io.in(currentChannel).emit('numberOfUsers', {numberOfUsers: nrOfUsers, memberList: users})
+    }
+  });
+
+  // socket.on('get_all_members', (data) => {
+  //   usernameIDS[data.socketID] = data.username;
+  //   if (io.sockets.adapter.rooms[currentChannel]){
+  //     clientList = Object.keys(io.sockets.adapter.rooms[currentChannel].sockets) 
+  //     for(let x = 0; x < nrOfUsers; x++){
+  //       users.push(usernameIDS[clientList[x]])
+  //     }
+  //     console.log(users);
+  //     io.in(currentChannel).emit('show_all_members', {memberList: users})
+  //   }
+  // });
 });
 
 http.listen(port, () => console.log(`Client listening on port ${port}!`));

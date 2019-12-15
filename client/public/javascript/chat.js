@@ -5,7 +5,7 @@ const messageInput = document.getElementById('input')
 //let username = document.getElementById('username').innerText;
 
 
-let name = "andreas";
+// let name = "andreas";
 
 // socket.on('chat-message', data => {
 //     appendMessage(username `: ${data.message}`)

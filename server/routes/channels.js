@@ -8,7 +8,7 @@ const Users = require('../models/users');
 const DirectMessages = require('../models/directMessage');
 
 
-/* GET all which the user don't Channels */ 
+/* GET all channels */ 
 router.get('/', function(req,res,next){
     Channels.find({}, function(err,data){
         if(err){
@@ -41,6 +41,20 @@ router.get('/:id', function (req, res, next){
             res.status(500).send();
         }
         else{
+            res.send(data);
+        }
+    });
+});
+
+/* GET all messages to the specific channel. */
+router.get('/messages/:id', function (req, res, next) {
+    let clickedChannelID = req.params.id;
+    Messages.find({channelID: clickedChannelID},{'_id': 0, 'username': 1, 'time': 1, 'text': 1}, function(err, data) {   
+        if(err){
+            res.status(500).send();
+        }
+        else{
+            console.log("data: " + data)
             res.send(data);
         }
     });
@@ -84,19 +98,6 @@ router.post('/new-channel', function (req, res, next) {
        
 });
 
-/* GET all messages to the specific channel. */
-router.get('/messages/:id', function (req, res, next) {
-    const clickedChannelID = req.params.id;
-    Messages.find({channelID: clickedChannelID},{'_id': 0, 'username': 1, 'time': 1, 'text': 1}, function(err, data) {   
-        if(err){
-            res.status(500).send();
-        }
-        else{
-            res.send(data);
-
-        }
-    });
-});
 
 // /* GET all Channels information from each user ID. */
 router.get('/directMessage/:id', function (req, res, next){

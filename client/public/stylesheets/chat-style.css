@@ -38,72 +38,8 @@ body {
   background: rgba(0, 0, 0, 0.7);
   z-index: 2; }
 
-#showChannels__container {
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: white;
-  padding: 30px;
-  border-radius: 10px;
-  z-index: 30;
-  width: 100%;
-  max-width: 520px; }
-  #showChannels__container .fa-times {
-    float: right;
-    font-size: 2.5rem;
-    color: #cfc3cf; }
-    #showChannels__container .fa-times:hover {
-      cursor: pointer; }
-  #showChannels__container h1 {
-    font-size: 2.5rem; }
-  #showChannels__container p {
-    font-size: 1.4rem;
-    margin-top: 10px; }
-  #showChannels__container .inner__container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center; }
-    #showChannels__container .inner__container table {
-      width: 100%;
-      max-width: 620px;
-      margin-top: 20px;
-      border-spacing: 0; }
-      #showChannels__container .inner__container table thead tr td {
-        height: 20px;
-        font-family: "Lato", sans-serif;
-        font-size: 1.4rem;
-        text-align: left; }
-      #showChannels__container .inner__container table tbody {
-        display: flex;
-        flex-direction: column;
-        height: 350px;
-        overflow-y: scroll; }
-        #showChannels__container .inner__container table tbody tr {
-          border-bottom: 1px solid #cfc3cf; }
-          #showChannels__container .inner__container table tbody tr td {
-            height: 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center; }
-            #showChannels__container .inner__container table tbody tr td .channels {
-              font-size: 1.6rem;
-              text-transform: capitalize;
-              text-decoration: none;
-              color: black; }
-          #showChannels__container .inner__container table tbody tr input {
-            height: 30px;
-            width: 80px;
-            border: none;
-            border-radius: 5px;
-            background: #3f0e40;
-            font-family: "Lato", sans-serif;
-            color: white; }
-            #showChannels__container .inner__container table tbody tr input:hover {
-              cursor: pointer; }
-
+#showMembers__container,
+#showChannels__container,
 #createChannel__container {
   display: none;
   position: absolute;
@@ -116,61 +52,136 @@ body {
   z-index: 30;
   width: 100%;
   max-width: 520px; }
+  #showMembers__container .fa-times,
+  #showChannels__container .fa-times,
   #createChannel__container .fa-times {
     float: right;
     font-size: 2.5rem;
     color: #cfc3cf; }
+    #showMembers__container .fa-times:hover,
+    #showChannels__container .fa-times:hover,
     #createChannel__container .fa-times:hover {
       cursor: pointer; }
+  #showMembers__container h1,
+  #showChannels__container h1,
   #createChannel__container h1 {
     font-size: 2.5rem; }
+  #showMembers__container p,
+  #showChannels__container p,
   #createChannel__container p {
-    font-size: 1.4rem;
     margin-top: 10px; }
-  #createChannel__container .createChannel__form {
+
+#showMembers__container h1 i {
+  padding-right: 7.5px; }
+
+#showMembers__container .inner__container {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px; }
+  #showMembers__container .inner__container h1 {
     display: flex;
-    flex-direction: column; }
-    #createChannel__container .createChannel__form .createChannel__input {
-      height: 40px;
-      margin-top: 5px;
+    align-items: center;
+    font-family: "Lato", sans-serif;
+    font-size: 1.8rem; }
+    #showMembers__container .inner__container h1:before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      -moz-border-radius: 7.5px;
+      -webkit-border-radius: 7.5px;
+      border-radius: 7.5px;
+      background-color: #2BAC76;
+      margin-right: 5px; }
+
+#showChannels__container .inner__container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+  #showChannels__container .inner__container table {
+    width: 100%;
+    max-width: 620px;
+    margin-top: 20px;
+    border-spacing: 0; }
+    #showChannels__container .inner__container table thead tr td {
+      height: 20px;
+      font-family: "Lato", sans-serif;
       font-size: 1.4rem;
-      padding-left: 5px;
-      border-radius: 5px;
-      border: 1px solid grey; }
-      #createChannel__container .createChannel__form .createChannel__input::placeholder {
-        font-size: 1.4rem;
-        padding-left: 10px; }
-    #createChannel__container .createChannel__form label {
-      margin-top: 20px;
-      font-size: 1.6rem; }
-      #createChannel__container .createChannel__form label:first-child {
-        margin-top: 10px; }
-    #createChannel__container .createChannel__form span {
-      font-size: 1.2rem;
-      margin-top: 5px;
-      color: #cfc3cf; }
-    #createChannel__container .createChannel__form #createChannel__error {
-      font-size: 1.6rem;
-      color: red; }
-    #createChannel__container .createChannel__form #createChannel__success {
-      font-size: 1.6rem;
-      color: green; }
-    #createChannel__container .createChannel__form .createButton__container {
-      width: 100%;
+      text-align: left; }
+    #showChannels__container .inner__container table tbody {
       display: flex;
-      justify-content: flex-end; }
-      #createChannel__container .createChannel__form .createButton__container #createChannelBtn {
-        width: 100px;
-        height: 40px;
-        border-radius: 5px;
-        border: 1px solid #cfc3cf;
-        margin-top: 10px;
-        background: #cfc3cf;
-        font-family: "Lato", sans-serif;
-        font-weight: 900;
-        font-size: 1.4rem; }
-        #createChannel__container .createChannel__form .createButton__container #createChannelBtn:hover {
-          cursor: pointer; }
+      flex-direction: column;
+      height: 350px;
+      overflow-y: scroll; }
+      #showChannels__container .inner__container table tbody tr {
+        border-bottom: 1px solid #cfc3cf; }
+        #showChannels__container .inner__container table tbody tr td {
+          height: 40px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center; }
+          #showChannels__container .inner__container table tbody tr td .channels {
+            font-size: 1.6rem;
+            text-transform: capitalize;
+            text-decoration: none;
+            color: black; }
+        #showChannels__container .inner__container table tbody tr input {
+          height: 30px;
+          width: 80px;
+          border: none;
+          border-radius: 5px;
+          background: #3f0e40;
+          font-family: "Lato", sans-serif;
+          color: white; }
+          #showChannels__container .inner__container table tbody tr input:hover {
+            cursor: pointer; }
+
+#createChannel__container .createChannel__form {
+  display: flex;
+  flex-direction: column; }
+  #createChannel__container .createChannel__form .createChannel__input {
+    height: 40px;
+    margin-top: 5px;
+    font-size: 1.4rem;
+    padding-left: 5px;
+    border-radius: 5px;
+    border: 1px solid grey; }
+    #createChannel__container .createChannel__form .createChannel__input::placeholder {
+      font-size: 1.4rem;
+      padding-left: 10px; }
+  #createChannel__container .createChannel__form label {
+    margin-top: 20px;
+    font-size: 1.6rem; }
+    #createChannel__container .createChannel__form label:first-child {
+      margin-top: 10px; }
+  #createChannel__container .createChannel__form span {
+    font-size: 1.2rem;
+    margin-top: 5px;
+    color: #cfc3cf; }
+  #createChannel__container .createChannel__form #createChannel__error {
+    font-size: 1.6rem;
+    color: red; }
+  #createChannel__container .createChannel__form #createChannel__success {
+    font-size: 1.6rem;
+    color: green; }
+  #createChannel__container .createChannel__form .createButton__container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end; }
+    #createChannel__container .createChannel__form .createButton__container #createChannelBtn {
+      width: 100px;
+      height: 40px;
+      border-radius: 5px;
+      border: 1px solid #cfc3cf;
+      margin-top: 10px;
+      background: #cfc3cf;
+      font-family: "Lato", sans-serif;
+      font-weight: 900;
+      font-size: 1.4rem; }
+      #createChannel__container .createChannel__form .createButton__container #createChannelBtn:hover {
+        cursor: pointer; }
 
 #createDirectMessage__container {
   display: none;
@@ -276,7 +287,29 @@ body {
     grid-column: 2;
     background: white;
     border: 1px grey;
-    border-style: hidden hidden solid hidden; }
+    border-style: hidden hidden solid hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; }
+    .grid-container .header .header__container {
+      padding-left: 20px; }
+      .grid-container .header .header__container #header__name {
+        font-size: 2rem;
+        font-family: "Montserrat", sans-serif; }
+      .grid-container .header .header__container .icon__container {
+        margin-top: 5px; }
+        .grid-container .header .header__container .icon__container a {
+          font-size: 1.5rem;
+          font-family: "Lato", sans-serif;
+          color: #cfc3cf; }
+          .grid-container .header .header__container .icon__container a i {
+            padding: 0 5px 0 5px; }
+          .grid-container .header .header__container .icon__container a:after {
+            content: '|';
+            color: #cfc3cf;
+            padding-left: 5px; }
+          .grid-container .header .header__container .icon__container a:hover {
+            cursor: pointer; }
   .grid-container .sidebar {
     grid-row: 1/11;
     grid-column: 1;

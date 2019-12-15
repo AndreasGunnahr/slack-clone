@@ -1,9 +1,15 @@
 const socket = io.connect('http://localhost:3000')
 const channels = document.querySelectorAll('.channel');
-const chatMessages = document.getElementById('messages');
+let chatMessages = document.getElementById('messages');
 const createChannelInput = document.getElementsByClassName("createChannel__input")[0];
 const channelsContainer = document.getElementsByClassName("channels__container")[0];
-const tBody = document.getElementsByTagName('tbody')[0];
+const tBodyChannel = document.getElementById('tbody_channels');
+const headerName = document.getElementById('header__name');
+const nrOfMembers = document.getElementById('nrOfMembers');
+const nrOfMembersH1 = document.getElementById('nrOfMembersH1');
+const innerContainer = document.getElementsByClassName('inner__container')[0];
+const username = document.getElementById('username').innerText;
+
 
 
 /* Checking against the DB if the room name is available for the current user */ 
@@ -28,28 +34,79 @@ createChannelInput.addEventListener('input', (e) => {
     })
 });
 
+channels.forEach(channel => {
+    channel.addEventListener('click', () => {
+        const channelID = channel.attributes[0].value;
+        const channelName = channel.innerText;
+        channels.forEach(channel => {
+            channel.classList.remove('active');
+        });
+
+        channel.classList.add('active');
+        joinChannel(channelName, channelID);
+    })
+});
+
 
 /* If the user clicks the "join channel", then we get the available channels.*/ 
 joinChannelBtn.addEventListener('click', () => {
+    channels.forEach(channel => {
+        channel.classList.remove('active');
+    });
     $.ajax({
         url: 'http://localhost:3000/chat/all-channels',
         method: 'GET',
     }).done(function (data) {
-       tBody.innerHTML = "";
+        tBodyChannel.innerHTML = "";
        data.map(channel => {
             let trTag = document.createElement('tr');
             trTag.classList.add('table-row-all-channels');
-            trTag.innerHTML = '<td><a class = "channels">' + channel.name + '</a><input id =' + channel._id + ' type = "button" value = "Join"></td>';
-            tBody.append(trTag);
-            document.getElementById(channel._id).addEventListener('click', () => {
-                socket.emit('join', {channelID: channel._id});
-                socket.on('message', function(data){
-                    console.log(data)
+            trTag.innerHTML = '<td><a class = "channels">' + channel.name + '</a><input name =' + channel._id + ' type = "button" value = "Join"></td>';
+            tBodyChannel.append(trTag);
+            let allChannelsData = document.getElementsByName(channel._id);
+            allChannelsData.forEach(channels => {
+                console.log(channels)
+                channels.addEventListener('click', () => {
+                    joinChannel(channel.name,channel._id)
                 })
             })
        });
     });
 });
+
+/* If the user clicks the join channel button */
+function joinChannel(nameChannel,channelID){
+    // history.pushState({}, null, 'http://localhost:3000/chat/' + channelID);
+    chatMessages.innerHTML = "";
+    socket.emit('reset_users_channel', {socketID: socket.id, username: username})
+    socket.emit('join_channel', {channelID: channelID, socketID: socket.id, username: username});
+    
+    socket.on('numberOfUsers', (users) => {
+        nrOfMembers.innerHTML = '<i class="far fa-user"></i>' + users.numberOfUsers;
+        nrOfMembersH1.innerHTML = '<i class="far fa-user"></i>' + users.numberOfUsers + ' - Members online';
+        innerContainer.innerHTML = "";
+        users.memberList.map(member => {
+            let h1Tag = document.createElement('H1');
+            h1Tag.innerText = member;
+            innerContainer.append(h1Tag);
+        });
+    });
+    $.ajax({
+        url:'http://localhost:3000/chat/messages/' + channelID ,
+        method: 'GET'
+    }).done(function(data){
+        headerName.innerText = "#" + nameChannel;
+        data.map(message => {
+            let pElement = document.createElement('p');
+            let liElement = document.createElement('li');
+            pElement.innerText = message.text;
+            liElement.innerText = message.username;
+            liElement.append(pElement);
+            chatMessages.append(liElement)
+        });
+        exitBtn[0].click();
+    });
+} 
 
 /* If the user clicks the "create" new channel btn, we sending the information to the client server */
 createChannelBtn.addEventListener('click', (e) => {
@@ -68,7 +125,7 @@ createChannelBtn.addEventListener('click', (e) => {
             let linkTag = document.createElement('a');
             linkTag.innerHTML = '<i class = "fas fa-hashtag"></i>' + name;
             linkTag.classList.add('channel');
-            linkTag.setAttribute("id", data.id);
+            linkTag.setAttribute('name', data.id);
             channelsContainer.append(linkTag);
             exitBtn[1].click();
         }
@@ -76,19 +133,6 @@ createChannelBtn.addEventListener('click', (e) => {
 })
 
 
-// channels.forEach(channel => {
-//     channel.addEventListener('click', (e) => {
-//         let id = channel.attributes[0].value;
-//         channels.forEach(channel => {
-//             channel.classList.remove('active');
-//         });
-
-//         channel.classList.add('active');
-//         chatMessages.innerHTML = '';
-//         history.pushState(null, '', '/chat/' + id); 
-//         DisplayMessages(id);
-//     })
-// });
 
 
 // async function DisplayMessages(id){

@@ -19,8 +19,14 @@ router.get('/', async function(req, res, next) {
      });
 });
 
-// /* Re render */
-// router.get('')
+/* Getting all messages for each chat */
+router.get('/messages/:id', async function(req,res,next){
+    let channelID = req.params.id;
+    const responseAllChannelMessages = await fetch('http://localhost:5000/channels/messages/' + channelID);
+    const allChannelMessages = await responseAllChannelMessages.json();
+    res.send(allChannelMessages)
+})
+
 
 router.get('/all-channels', async function(req, res, next){
     const userID = req.session.activeUser.id;
@@ -73,7 +79,6 @@ router.post('/new-channel', function (req, res, next) {
     .then(response => {
         response.json().then(function(data) {
             if(data.status){
-                console.log(data)
                 res.send(data);
             }
         });

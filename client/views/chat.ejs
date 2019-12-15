@@ -13,6 +13,13 @@
 <body>
     <div class = "overlay"></div>
 
+    <div id = "showMembers__container">
+        <a class="fas fa-times"></a>
+        <h1 id = "nrOfMembersH1"></h1>
+        <div class = "inner__container">
+        </div>
+    </div>
+
     <div id = "showChannels__container">
         <a class="fas fa-times"></a>
         <h1>Join a channel</h1>
@@ -23,13 +30,7 @@
                         <td>List of all channels</td>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr class = "table-row-all-channels">
-                        <!-- <td>
-                            <a class = "channels">Andreas</a>
-                            <input type = "button" value = "Join">
-                        </td> -->
-                    </tr>
+                <tbody id = "tbody_channels">
                 </tbody>                   
             </table>
         </div>
@@ -84,6 +85,14 @@
     
     <div class="grid-container">
         <div class="header">
+            <div class = "header__container">
+                <h1 id = "header__name">#ChannelName</h1>
+                <div class = "icon__container">
+                    <a><i class="far fa-star"></i></a>
+                    <a id = "nrOfMembers"><i class="far fa-user"></i>24</a>
+                </div>
+
+            </div>
 
         </div>
         <div class="sidebar">
@@ -101,7 +110,7 @@
                 </div>
                 <div class = "channels__container">
                     <% channels.forEach(channel => { %>
-                        <a id = "<%= channel._id%>" class = "channel"><i class="fas fa-hashtag"></i><%= channel.name %></a>
+                        <a name = "<%= channel._id%>" class = "channel"><i class="fas fa-hashtag"></i><%= channel.name %></a>
                     <% }) %>
                 </div>
                 <div class = "directMessage__header">
@@ -132,6 +141,7 @@
     <script src= "/javascript/search.js"></script>
     <script src= "/javascript/messages.js"></script>
     <script src="/javascript/chat.js"></script>
+    <script src="/javascript/users.js"></script>
 </body>
 
 </html>
