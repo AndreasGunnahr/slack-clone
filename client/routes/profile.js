@@ -24,7 +24,7 @@ const fetch = require('node-fetch');
                     renderData(data);
                 });
         function renderData(data){
-            res.render('profile', {defaultPicture: data.body.image})
+            res.render('profile', {defaultPicture: data.body.image, email: data.body.email, name: data.body.name})
         }
       });
 
@@ -51,15 +51,14 @@ router.post('/upload', function(req, res, next) {
             console.log(err);
             res.render('profile', {
                 msg: err,
-                defaultPicture: req.session.activeUser.image
+                defaultPicture: 'uploads/defaultPicture.png'
             });
         } else{
             if(req.file == undefined){
                 res.render('profile', {
-                    defaultPicture: req.session.activeUser.image
+                    defaultPicture: 'uploads/defaultPicture.png'
                 });
             } else{
-                console.log(req);
                 const profile = {
                     image: `uploads/${req.file.filename}`,
                     id: req.session.activeUser.id
@@ -74,18 +73,51 @@ router.post('/upload', function(req, res, next) {
                 };
                 
                 fetch("http://localhost:5000/api/profiles/upload", option)
-                .then(r =>  r.text().then(data => ({status: r.status, body: data})))
+                .then(r =>  r.json().then(data => ({status: r.status, body: data})))
                 .then(function(data){
+                    renderData(data);
                 });
                 //console.log(`uploads/${req.file.filename}`);
-                res.render('profile', {
-                    defaultPicture: req.session.activeUser.image,
-                    file: `uploads/${req.file.filename}`
-                });
+                function renderData(data) {
+                    res.render('profile', {
+                        defaultPicture: 'uploads/defaultPicture.png',
+                        file: `uploads/${req.file.filename}`,
+                        name: data.body.name,
+                        email: data.body.email
+                    });
+                }
+               
             }
         }
     });
 });
+
+router.post('/savedChanges', function(req, res, next){
+    
+    const profile = {
+        id: req.session.activeUser.id,
+        name: req.body.name,
+        email: req.body.email
+    }
+    console.log(req.body);
+    console.log(profile);
+
+    const option = {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify(profile)
+    };
+    fetch("http://localhost:5000/api/profiles/upload/info", option)
+            .then(r =>  r.json().then(data => ({status: r.status, body: data})))
+            .then(function(data){
+                renderData(data);
+            });
+    function renderData(data){
+        res.render('profile', {defaultPicture: data.body.image, email: data.body.email, name: data.body.name})
+    }
+})
 
 
 router.post('/delete', function(req, res, next){

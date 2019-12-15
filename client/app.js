@@ -8,6 +8,12 @@ const io = require('socket.io')(http);
 const sassMiddleware = require('node-sass-middleware');
 var session = require('express-session');
 var flash = require('connect-flash');
+const bodyParser = require('body-parser');
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+app.use(bodyParser.json())
 
 /* View engine setup */ 
 app.set('views', path.join(__dirname, 'views'));

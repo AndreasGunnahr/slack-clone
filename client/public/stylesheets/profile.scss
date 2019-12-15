@@ -1,40 +1,70 @@
-$slack-green: rgb(0, 163, 122);
-$slack-purple: rgb(122, 0, 112);
+@import './global';
+
+$border: rgb(112, 112, 112);
+
 
 body{
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    color: darkslategray;
+    font-family: $text-font;
+    color: rgb(41, 43, 43);
+    font-size: 1.6rem;
+    background-color: $purple;
 }
 
+.back {
+    margin-top: 30px;
+    margin-bottom: 0;
+    margin-left: 15px;
+
+    a {
+        color: white;
+        text-decoration: none;
+    }
+}
+
+
 img {
-    height: 366px;
-    width: 366px;
+    height: 300px;
+    width: 300px;
+    border-radius: 8px;
+    margin-bottom: 20px;
 }
 
 .container {
     display: flex;
     flex-direction: row-reverse;
-
+    margin: 5vh auto;
+    padding: 5em;
+    border-radius: 18px;
+    width: 70vw;
+    height: 70vh;
+    min-height: 600px; 
+    background-color: white;
+    position: relative;
 }
 
 .profilePic {
     width: 366px;
     height: 500px;
+    margin: 0 auto;
+    margin-left: 50px;
+    font-weight: bolder;
 }
 
 .profileInfo {
     margin: 0 auto;
+    
+    label {
+        font-weight: bolder;
+    }
 }
 
 .btn {
-    background: $slack-green;
+    background: $green;
     color: white;
     padding: 10px 20px;
-    border: 1px solid rgb(70, 116, 116);
+    border: 1px solid $border;
     border-radius: 8px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 1rem;
-    font-weight: 800;
+    font-weight: bolder;
 
     &:hover {
         cursor: pointer;
@@ -53,17 +83,36 @@ img {
     font-weight: 100;
 }
 
-.pic {
-    background-color: $slack-purple;
-}
 
 .updateInfo {
     margin: 60px 0px 5px 0px;
     input {
         margin: 5px 0px 30px 0px;
-        padding: 10px 100px;
+        padding: 10px 80px;
         border-radius: 4px;
-        border: 1px solid slategray;
+        border: 1px solid $border;
+        font-size: 1.6rem;
     }
 }
 
+
+@media only screen and (max-width: 1200px) {
+    body {
+        font-size: 1.5rem;
+    }
+
+    img {
+        height: 200px;
+        width: 200px;
+    }
+
+    .container {
+        flex-direction: column;
+        height: 80vh;
+        min-height: 800px;
+    }
+
+    .profilePic {
+        margin-left: 10px;
+    }
+}

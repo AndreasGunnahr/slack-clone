@@ -248,6 +248,14 @@ body {
         grid-row: 1/11;
         grid-column: 1;
         background: $purple;
+        .profileLink {
+            margin-top: 10px;
+            a {
+                padding: 10px;
+                color: $grey;
+                font-size: 1.5rem;
+            }
+        }
         .top__container{
             padding: 10px;
             #group__name{

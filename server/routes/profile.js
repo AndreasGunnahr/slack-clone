@@ -5,7 +5,6 @@ const Profile = require('../models/user');
 router.post('/profiles', function(req, res, next){
     const id = { _id: req.body.id };
     Profile.findById(id).then(function(profile){
-        console.log(req.body);
         res.send(profile);
     }).catch(next);
 });
@@ -26,6 +25,19 @@ router.post('/profiles/upload', function(req, res, next){
     const id = { _id: req.body.id };
     const image = { image: req.body.image};
     Profile.findByIdAndUpdate(id, image).then(function(){
+    Profile.findOne(id).then(function(profile){
+        res.send(profile);
+    });
+}).catch(next);
+})
+
+router.post('/profiles/upload/info', function(req, res, next){
+    const id = { _id: req.body.id };
+    const parameters = {
+        email: req.body.email,
+        name: req.body.name
+    }
+    Profile.findByIdAndUpdate(id, parameters).then(function(){
     Profile.findOne(id).then(function(profile){
         res.send(profile);
     });

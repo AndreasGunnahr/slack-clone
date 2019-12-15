@@ -5,8 +5,12 @@
     <link rel="stylesheet" href="/stylesheets/profile.css">
 </head>
 <body>
+    <div class="back">
+        <h1><a href="/chat">← Back to chat</a></h1>
+    </div>
     <div class="container">
         <div class="profilePic">
+            <div></div>
             <p>Profile photo</p>
             <img src="<%= typeof file != 'undefined' ? file : defaultPicture %>">
             <form action="/upload" method="POST" enctype="multipart/form-data">
@@ -19,19 +23,18 @@
             </form>
         </div>
         <div class="profileInfo">
-                <form action="/saveChanges" method="POST" enctype="multipart/form-data">
+                <form action="/savedChanges" method="POST">
                     <div class="updateInfo">
                         <div>
                             <label for="name">Full name</label><br>
-                            <input name="name" type="name">
+                            <input name="name" type="name" value="<%= name %>">
                         </div>
                         <div>
                             <label for="email">Email</label><br>
-                            <input name="email" type="email">
+                            <input name="email" type="email" value="<%= email %>">
                         </div>
                     </div>
                     <div>
-                        <button class="btn cncel">Cancel</button>
                         <label for="info" class="btn update">Save changes</label>
                         <input id="info" type="submit" onchange="this.form.submit()" class="btn" style="visibility: hidden;">
                     </div>
