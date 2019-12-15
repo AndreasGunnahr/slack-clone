@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
+
 /* View engine setup */ 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -38,6 +39,7 @@ app.use(sassMiddleware({
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
+
 /* Import client routes */ 
 
 /* Setting client to use our routes */ 
@@ -59,27 +61,58 @@ app.use('/',ProfileRouter);
 // app.use('/chat/new-directMessage', CreateDirectMessageRouter);
 
 
+var usernameIDS = {};
+var users;
+io.on('connection', function (socket) {
+  var currentChannel, username, nrOfUsers, socketID;
+  let clientList;
 
-// users = {};
-/* Settings for our socket.io connection */ 
-// io.on('connection', function (socket) {
-//   socket.on('new-user', name => {
-//       users[socket.id] = name;
-//       socket.broadcast.emit('user-connected', name);
-//     })
-//     socket.on('send', message => {
-//       socket.broadcast.emit('chat-message', { message: message, name: users[socket.id] });
-//     })
-//     socket.on('disconnect', () => {
-//       socket.broadcast.emit('user-disconnected', users[socket.id]);
-//       delete users[socket.id];
-//     });
-//   console.log( 'a user connected');
-// });
+  socket.on('reset_users_channel', (data) => {
+    users = [];
+    usernameIDS[data.socketID] = data.username;
+    Object.keys(socket.rooms).forEach(function(roomName){
+      if(io.sockets.adapter.rooms[roomName]){
+        socket.leave(roomName)
+        if (io.sockets.adapter.rooms[roomName]){
+          nrOfUsers = io.sockets.adapter.rooms[roomName].length;
+          clientList = Object.keys(io.sockets.adapter.rooms[roomName].sockets) 
+          for(let x = 0; x < nrOfUsers; x++){
+            users.push(usernameIDS[clientList[x]])
+          }
+          io.in(roomName).emit('numberOfUsers', {numberOfUsers: nrOfUsers, memberList: users})
+        }
+      }
+    });
+  });
 
+  socket.on('join_channel', (data) => {
+    users = [];
+    currentChannel = data.channelID
+    socket.join(currentChannel);
+    if (io.sockets.adapter.rooms[currentChannel]){
+      nrOfUsers = io.sockets.adapter.rooms[currentChannel].length;
+      clientList = Object.keys(io.sockets.adapter.rooms[currentChannel].sockets) 
+      for(let x = 0; x < nrOfUsers; x++){
+        users.push(usernameIDS[clientList[x]])
+      }
+      io.in(currentChannel).emit('numberOfUsers', {numberOfUsers: nrOfUsers, memberList: users})
+    }
+  });
+
+  // socket.on('get_all_members', (data) => {
+  //   usernameIDS[data.socketID] = data.username;
+  //   if (io.sockets.adapter.rooms[currentChannel]){
+  //     clientList = Object.keys(io.sockets.adapter.rooms[currentChannel].sockets) 
+  //     for(let x = 0; x < nrOfUsers; x++){
+  //       users.push(usernameIDS[clientList[x]])
+  //     }
+  //     console.log(users);
+  //     io.in(currentChannel).emit('show_all_members', {memberList: users})
+  //   }
+  // });
+});
 
 http.listen(port, () => console.log(`Client listening on port ${port}!`));
-
 
 
 module.exports = app;

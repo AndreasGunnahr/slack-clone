@@ -12,13 +12,36 @@
 
 <body>
     <div class = "overlay"></div>
+
+    <div id = "showMembers__container">
+        <a class="fas fa-times"></a>
+        <h1 id = "nrOfMembersH1"></h1>
+        <div class = "inner__container">
+        </div>
+    </div>
+
+    <div id = "showChannels__container">
+        <a class="fas fa-times"></a>
+        <h1>Join a channel</h1>
+        <div class = "inner__container">
+            <table>
+                <thead>
+                    <tr>
+                        <td>List of all channels</td>
+                    </tr>
+                </thead>
+                <tbody id = "tbody_channels">
+                </tbody>                   
+            </table>
+        </div>
+    </div>
     
     <div id = "createChannel__container">
         <a class="fas fa-times"></a>
         <h1>Create a channel</h1>
         <p>Channels are where your team communicates. They’re best when organized around a topic — #marketing, for example.</p>
         <label for = "name"></label>
-        <form class = "createChannel__form" method = "POST" action = "/chat/new-channel">
+        <form class = "createChannel__form">
             <label for = "name">Name </label>
             <input class = "createChannel__input" name = "name" placeholder="#   e.g. plan-budget" autocomplete="off">
             <label for = "description">Description <span>(Optional)</span></label>
@@ -36,10 +59,10 @@
         <a class="fas fa-times"></a>
         <div class = "inner__container">
             <h1>Direct Messages</h1>
-            <form class = "createDirectMessage__form" method = "POST" action = "/search">
-                <input class = "createDirectMessage__input" name = "search" placeholder = "Find or start a conversation">
-                <!-- <input type = "button" id = "createDirectMessageBtn" value = "Go"> -->
+            <form class = "createDirectMessage__form">
+                <input class = "createDirectMessage__input" name = "search" placeholder = "Find or start a conversation" autocomplete="off">
             </form>
+            <span id = "createDirectMessage__error"></span>
             <table>
                 <thead>
                     <tr>
@@ -48,7 +71,7 @@
                 </thead>
                 <tbody>
                     <% allUsers.forEach(user => { %>
-                    <tr>
+                    <tr class = "table-row">
                         <td>
                             <a id = "<%= user._id %>" class = "directMessage"><%= user.username%></a>
                         </td>
@@ -62,6 +85,14 @@
     
     <div class="grid-container">
         <div class="header">
+            <div class = "header__container">
+                <h1 id = "header__name">#ChannelName</h1>
+                <div class = "icon__container">
+                    <a><i class="far fa-star"></i></a>
+                    <a id = "nrOfMembers"><i class="far fa-user"></i>24</a>
+                </div>
+
+            </div>
 
         </div>
         <div class="sidebar">
@@ -69,8 +100,11 @@
                 <a href="/profile">Edit Profile</a>
             </div>
             <div class = "top__container">
-                <h1 id = "group__name">GRUPP NAMN</h1>
+                <h1 id = "group__name">WEBB19</h1>
                 <h2 id = "username"><%= username %></h2>
+            </div>
+            <div class = "setting__container">
+                <a id = "joinChannelBtn"><i class="fas fa-comments"></i>Join channel</a>
             </div>
             <div class = "middle__container">
                 <div class = "channel__header">
@@ -79,7 +113,7 @@
                 </div>
                 <div class = "channels__container">
                     <% channels.forEach(channel => { %>
-                        <a id = "<%= channel._id%>" class = "channel"><i class="fas fa-hashtag"></i><%= channel.name %></a>
+                        <a name = "<%= channel._id%>" class = "channel"><i class="fas fa-hashtag"></i><%= channel.name %></a>
                     <% }) %>
                 </div>
                 <div class = "directMessage__header">
@@ -88,15 +122,13 @@
                 </div>
                 <div class = "directMessage__container">
                     <% directMessages.forEach(directMessage => { %>
-                        <a id = "<%= directMessage._id%>" class = "directMessage"><%= directMessage.username %></a>
+                        <a id = "<%= directMessage._id%>" class = "createdDirectMessage"><%= directMessage.username %></a>
                     <% }) %>
                 </div>
             </div>
         </div>
 
         <div class="text">
-            You joined as <%= username %>
-
             <ul id="messages"></ul>
         </div>
 
@@ -107,10 +139,12 @@
     </div>
 
     <script src="/socket.io/socket.io.js"></script>
-    <script src="/javascript/chat.js"></script>
     <script src="/javascript/sidebar.js"></script>
     <script src= "/javascript/channels.js"></script>
+    <script src= "/javascript/search.js"></script>
     <script src= "/javascript/messages.js"></script>
+    <script src="/javascript/chat.js"></script>
+    <script src="/javascript/users.js"></script>
 </body>
 
 </html>

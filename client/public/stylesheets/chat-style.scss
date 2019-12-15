@@ -17,6 +17,9 @@ body {
     z-index: 2;
 }
 
+
+#showMembers__container,
+#showChannels__container,
 #createChannel__container{
     display: none;
     position: absolute; 
@@ -41,9 +44,101 @@ body {
         font-size: 2.5rem;
     }
     p{  
-        font-size: 1.4rem;
         margin-top: 10px;
     }
+}
+
+#showMembers__container{
+    h1{
+        i{
+            padding-right: 7.5px;
+        }
+    }
+    .inner__container{
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+        h1{ 
+            display: flex;
+            align-items: center;
+            font-family: $chat-font;
+            font-size: 1.8rem;
+            &:before{
+                content: '';
+                display: inline-block;
+                width: 8px;
+                height: 8px;
+                -moz-border-radius: 7.5px;
+                -webkit-border-radius: 7.5px;
+                border-radius: 7.5px;
+                background-color: $green;
+                margin-right: 5px;
+            }
+        }
+    }
+}
+
+#showChannels__container{
+    .inner__container{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        table{
+            width: 100%;
+            max-width: 620px;
+            margin-top: 20px;
+            border-spacing: 0;
+            thead{
+                tr{
+                    td{
+                        height: 20px;
+                        font-family: $chat-font;
+                        font-size: 1.4rem;
+                        text-align: left;
+                    }
+                }               
+            }
+            tbody{
+                display: flex;
+                flex-direction: column;
+                height: 350px;
+                overflow-y: scroll;
+                tr{
+                    border-bottom: 1px solid $grey;
+                    td{
+                        height: 40px;
+                        display:flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        .channels{
+                            font-size: 1.6rem;
+                            text-transform: capitalize;
+                            text-decoration: none;
+                            color: black;
+                        } 
+                    }
+                    input{
+                        height: 30px;
+                        width: 80px;
+                        border: none;
+                        border-radius: 5px;
+                        background: $purple;
+                        font-family: $chat-font;
+                        color: $white;
+                        &:hover{
+                            cursor: pointer;
+                        }
+                    }
+                }
+               
+            }
+        }
+    }
+}
+
+#createChannel__container{
     .createChannel__form{
         display: flex;
         flex-direction: column;
@@ -152,21 +247,11 @@ body {
                     padding-left: 10px;
                 }
             }
-            // #createDirectMessageBtn{
-            //     margin-left: 5px;
-            //     width: 100px;
-            //     height: 50px;
-            //     border-radius: 5px;
-            //     border: 1px solid $grey;
-            //     margin-top: 10px;
-            //     background: $grey;
-            //     font-family: $chat-font;
-            //     font-weight: 900;
-            //     font-size: 1.4rem;
-            //     &:hover{
-            //         cursor:pointer;
-            //     }
-            // }
+        }
+        #createDirectMessage__error{
+            margin-top: 20px;
+            font-size: 1.4rem;
+            color: red;
         }
         table{
             width: 100%;
@@ -187,7 +272,9 @@ body {
             tbody{
                 display: flex;
                 flex-direction: column;
-                max-height: 400px;
+                height: 350px;
+                
+                // min-height: 00px;
                 overflow-y: scroll;
                 tr{
                     border-bottom: 1px solid $grey;
@@ -242,6 +329,35 @@ body {
         background: white;
         border: 1px grey;
         border-style: hidden hidden solid hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .header__container{
+            padding-left: 20px;
+           #header__name{
+                font-size: 2rem;
+                font-family: $header-font;
+           }
+           .icon__container{
+                margin-top: 5px;
+                a{
+                    font-size: 1.5rem;
+                    font-family: $chat-font;
+                    color: $grey;
+                    i{  
+                        padding: 0 5px 0 5px;
+                    }
+                    &:after{
+                        content: '|';
+                        color: $grey;
+                        padding-left: 5px;
+                    }
+                    &:hover{
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
     }
     .sidebar {
         @extend %flex-column;
@@ -280,9 +396,32 @@ body {
                 }
             }
         }
+        .setting__container{
+            width: 100%;
+            padding: 10px 0 10px 0;
+            display: flex;
+            justify-content: flex-start;
+            padding-left: 10px;
+            #joinChannelBtn{
+                display: flex;
+                padding: 7.5px;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.2rem;
+                font-family: $header-font;
+                color: $white;
+                border: 1px solid $white;
+                border-radius: 5px;
+                i{
+                    padding-right: 5px;
+                    font-size: 1.6rem;
+                }
+                &:hover{
+                    cursor:pointer;
+                }
+            }
+        }
         .middle__container{
-            margin-top: 5px;
-            padding-top: 10px;
             width: 100%;
             height: 100%;
             overflow-y: scroll;
@@ -313,7 +452,7 @@ body {
                 font-size: 1.4rem;
                 font-weight: 300;
                 .channel,
-                .directMessage{
+                .createdDirectMessage{
                     padding: 5px 0px 5px 10px;
                     width: 100%;
                     text-decoration: none;
@@ -329,7 +468,7 @@ body {
                         background: rgba(0,0,0,0.2);
                     }
                 }
-                .directMessage{
+                .createdDirectMessage{
                     &:before{
                         content: '';
                         display: inline-block;
