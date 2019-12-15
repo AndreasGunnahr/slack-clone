@@ -1,31 +1,21 @@
 body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  color: darkslategray;
-}
+  color: darkslategray; }
 
 img {
   height: 366px;
-  width: 366px;
-}
+  width: 366px; }
 
 .container {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: reverse;
-      -ms-flex-direction: row-reverse;
-          flex-direction: row-reverse;
-}
+  flex-direction: row-reverse; }
 
 .profilePic {
   width: 366px;
-  height: 500px;
-}
+  height: 500px; }
 
 .profileInfo {
-  margin: 0 auto;
-}
+  margin: 0 auto; }
 
 .btn {
   background: #00a37a;
@@ -35,37 +25,27 @@ img {
   border-radius: 8px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 1rem;
-  font-weight: 800;
-}
-
-.btn:hover {
-  cursor: pointer;
-}
+  font-weight: 800; }
+  .btn:hover {
+    cursor: pointer; }
 
 .cncel {
   background-color: white;
   color: darkslategray;
-  font-weight: 100;
-}
+  font-weight: 100; }
 
 .dlt {
   background: transparent;
   color: darkslategray;
-  font-weight: 100;
-}
+  font-weight: 100; }
 
 .pic {
-  background-color: #7a0070;
-}
+  background-color: #7a0070; }
 
 .updateInfo {
-  margin: 60px 0px 5px 0px;
-}
-
-.updateInfo input {
-  margin: 5px 0px 30px 0px;
-  padding: 10px 100px;
-  border-radius: 4px;
-  border: 1px solid slategray;
-}
-/*# sourceMappingURL=profile.css.map */
+  margin: 60px 0px 5px 0px; }
+  .updateInfo input {
+    margin: 5px 0px 30px 0px;
+    padding: 10px 100px;
+    border-radius: 4px;
+    border: 1px solid slategray; }

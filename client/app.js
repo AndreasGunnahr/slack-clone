@@ -7,12 +7,7 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 const sassMiddleware = require('node-sass-middleware');
 var session = require('express-session');
-<<<<<<< HEAD
-const port = 3000;
-var app = express();
-=======
 var flash = require('connect-flash');
->>>>>>> master
 
 /* View engine setup */ 
 app.set('views', path.join(__dirname, 'views'));
@@ -40,7 +35,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 /* Import client routes */ 
 
 /* Setting client to use our routes */ 
-
+var IndexRouter = require('./routes/index');
 var LoginRouter = require('./routes/login');
 var RegisterRouter = require('./routes/register');
 var ChatRouter = require('./routes/chat');

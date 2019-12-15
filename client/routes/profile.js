@@ -8,7 +8,7 @@ const fetch = require('node-fetch');
 
     router.get('/profile', function(req, res, next) {
         const profile = {
-            id: req.session.activeUserInfo.id
+            id: req.session.activeUser.id
         }
         
         const option = {
@@ -51,19 +51,19 @@ router.post('/upload', function(req, res, next) {
             console.log(err);
             res.render('profile', {
                 msg: err,
-                defaultPicture: req.session.activeUserInfo.image
+                defaultPicture: req.session.activeUser.image
             });
         } else{
             if(req.file == undefined){
                 res.render('profile', {
-                    defaultPicture: req.session.activeUserInfo.image
+                    defaultPicture: req.session.activeUser.image
                 });
             } else{
+                console.log(req);
                 const profile = {
                     image: `uploads/${req.file.filename}`,
-                    id: req.session.activeUserInfo.id
+                    id: req.session.activeUser.id
                 }
-                console.log(profile, 'hej profil');
                 
                 const option = {
                 method: "POST",
@@ -79,7 +79,7 @@ router.post('/upload', function(req, res, next) {
                 });
                 //console.log(`uploads/${req.file.filename}`);
                 res.render('profile', {
-                    defaultPicture: req.session.activeUserInfo.image,
+                    defaultPicture: req.session.activeUser.image,
                     file: `uploads/${req.file.filename}`
                 });
             }
@@ -90,7 +90,7 @@ router.post('/upload', function(req, res, next) {
 
 router.post('/delete', function(req, res, next){
     const profile = {
-        id: req.session.activeUserInfo.id,
+        id: req.session.activeUser.id,
         image: 'uploads/defaultPicture.png'
     }
     const option = {
