@@ -8,6 +8,9 @@ const MessageSchema = mongoose.Schema(
      type: String,
      lowercase: true
     },
+    time: {
+      type: String
+    },
     text: {
         type: String,
         lowercase: true

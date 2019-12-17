@@ -13,6 +13,16 @@
 <body>
     <div class = "overlay"></div>
 
+    <div id = "editMessage__container">
+        <a class="fas fa-times"></a>
+        <h1>Edit message</h1>
+        <input id = "changedValue" type = "text" placeholder = "Enter your new text">
+        <div class = "button__container">
+            <button id = "cancel">Cancel</button>
+            <button id = "saveChanges"><i class="fas fa-level-down-alt fa-rotate-45"></i>Save changes</button>
+        </div>
+    </div>
+
     <div id = "showMembers__container">
         <a class="fas fa-times"></a>
         <h1 id = "nrOfMembersH1"></h1>
@@ -119,18 +129,20 @@
                 </div>
                 <div class = "directMessage__container">
                     <% directMessages.forEach(directMessage => { %>
-                        <a id = "<%= directMessage._id%>" class = "createdDirectMessage"><%= directMessage.username %></a>
+                        <a name = "<%= directMessage._id%>" class = "createdDirectMessage"><%= username == directMessage.createdByUsername ? directMessage.selectedByUsername : directMessage.createdByUsername  %></a>
                     <% }) %>
                 </div>
             </div>
         </div>
 
         <div class="text">
-            <ul id="messages"></ul>
+            <ul id="messages">
+            
+            </ul>
         </div>
 
         <form id="send">
-            <input type="text" id="input" name="msgVal" autocomplete="off" />
+            <input type="text" id="msgInput" name="msgVal" autocomplete="off" />
             <button type="submit" id="send-btn">Send</button>
         </form>
     </div>

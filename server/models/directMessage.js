@@ -6,9 +6,13 @@ const directMessageSchema = mongoose.Schema(
     },
     selectedUserID: {
     },
-    username: {
+    createdByUsername: {
         type: String,
         lowercase: true
+    },
+    selectedByUsername: {
+      type: String,
+      lowercase: true
     }
   });
 

@@ -3,7 +3,6 @@ const directMessageInput = document.getElementsByClassName('createDirectMessage_
 /* Checking against the DB if the room name is available for the current user */ 
 directMessageInput.addEventListener('input', (e) => {
     const searchValue = e.target.value;
-    console.log(searchValue);
     $.ajax({
         url: 'http://localhost:3000/chat/check-new-directMessage',
         method: 'POST',

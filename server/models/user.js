@@ -17,7 +17,7 @@ const UserSchema = mongoose.Schema(
     password: String,
     image: String,
     
-  });
+  },{collection: 'users'});
 // {timestamps: true}
 
 module.exports = mongoose.model('User',UserSchema);

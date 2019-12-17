@@ -8,9 +8,83 @@ const headerName = document.getElementById('header__name');
 const nrOfMembers = document.getElementById('nrOfMembers');
 const nrOfMembersH1 = document.getElementById('nrOfMembersH1');
 const innerContainer = document.getElementsByClassName('inner__container')[0];
-const username = document.getElementById('username').innerText;
+let username = document.getElementById('username').innerText;
+const directMessages = document.querySelectorAll(".directMessage");
+const directMessageContainer = document.querySelector(".directMessage__container");
+let createdDirectMessage = document.querySelectorAll('.createdDirectMessage');
+const messageContainer = document.getElementById('messages')
+let channelIDButton; 
+let editMsgID;
 
+createdDirectMessage.forEach(directMessage => {
+    directMessage.addEventListener('click', (e) => {
+        addRemoveActive(e, e.target.innerText ,e.target.attributes[0].value, 'directMessage' );
+    });
+})
 
+function addRemoveActive(e,username,id,checkValue ){
+    let createdDirectMessage = document.querySelectorAll('.createdDirectMessage');
+    createdDirectMessage.forEach(directMessage => { directMessage.classList.remove('active'); });
+    channels.forEach(channel => { channel.classList.remove('active'); });
+    e.target.classList.add('active');
+    joinChannel(username, id, checkValue);
+}
+
+socket.on('change_message', (data) => {
+    document.getElementsByName(data.editMsgID)[0].childNodes[2].innerText = data.newMessage;
+    document.getElementById('changedValue').value = "";
+});
+
+socket.on('add_directMessage',(data) => {
+    let name;
+    if(username.toLowerCase() == data.targetUsername){
+        name = data.username;
+    }else{
+        name = data.targetUsername;
+    }
+    let linkElement = document.createElement('a');
+    linkElement.classList.add('createdDirectMessage');
+    linkElement.setAttribute("name", data.targetID);
+    linkElement.innerText = name;
+    linkElement.addEventListener('click', (e) => {
+        addRemoveActive(e, e.target.innerText ,e.target.attributes[0].value, 'directMessage' );
+    })
+    directMessageContainer.append(linkElement);
+});
+
+socket.on('send_message', (data) => {
+    let HTML;
+    let messageElement = document.createElement('DIV');
+    messageElement.classList.add('text-container');
+    if(username == data.username){
+        HTML = `<div class = "icon-container">
+            <a id = ${data.msgID} class="fas fa-pen editMessage"></a>
+            <a id = "deleteMessage" class="fas fa-trash-alt"></a>
+        </div>`
+    }else{
+        HTML = ``;
+    }
+    messageElement.innerHTML = 
+    `<div class = "title">
+    <p class = "chat-name">${data.username}
+        <span class = "chat-time">${data.time}</span>
+    </p>
+    ${HTML}
+    </div>
+    <div class = "chat-message">
+        ${data.text}
+    </div>`;
+    messageElement.setAttribute('name',data.msgID)
+    messageContainer.append(messageElement)
+    if(username.toLowerCase() == data.username.toLowerCase()){
+        console.log("här")
+        document.getElementById(data.msgID).addEventListener('click', (e) => {
+            editMsgID = data.msgID;
+            editMessageContainer.style.display = "block";
+            overlay.style.display = "block";
+        })
+    }    
+})
 
 /* Checking against the DB if the room name is available for the current user */ 
 createChannelInput.addEventListener('input', (e) => {
@@ -35,18 +109,10 @@ createChannelInput.addEventListener('input', (e) => {
 });
 
 channels.forEach(channel => {
-    channel.addEventListener('click', () => {
-        const channelID = channel.attributes[0].value;
-        const channelName = channel.innerText;
-        channels.forEach(channel => {
-            channel.classList.remove('active');
-        });
-
-        channel.classList.add('active');
-        joinChannel(channelName, channelID);
+    channel.addEventListener('click', (e) => {
+        addRemoveActive(e, e.target.innerText, e.target.attributes[0].value, 'channels' );
     })
 });
-
 
 /* If the user clicks the "join channel", then we get the available channels.*/ 
 joinChannelBtn.addEventListener('click', () => {
@@ -65,22 +131,20 @@ joinChannelBtn.addEventListener('click', () => {
             tBodyChannel.append(trTag);
             let allChannelsData = document.getElementsByName(channel._id);
             allChannelsData.forEach(channels => {
-                console.log(channels)
                 channels.addEventListener('click', () => {
-                    joinChannel(channel.name,channel._id)
+                    joinChannel(channel.name,channel._id, 'channels')
                 })
             })
        });
     });
 });
 
-/* If the user clicks the join channel button */
-function joinChannel(nameChannel,channelID){
-    // history.pushState({}, null, 'http://localhost:3000/chat/' + channelID);
+/* If the user clicks the join channel or sidebar channel */
+function joinChannel(nameChannel,channelID, checkChoice){
+    channelIDButton = channelID;
     chatMessages.innerHTML = "";
     socket.emit('reset_users_channel', {socketID: socket.id, username: username})
     socket.emit('join_channel', {channelID: channelID, socketID: socket.id, username: username});
-    
     socket.on('numberOfUsers', (users) => {
         nrOfMembers.innerHTML = '<i class="far fa-user"></i>' + users.numberOfUsers;
         nrOfMembersH1.innerHTML = '<i class="far fa-user"></i>' + users.numberOfUsers + ' - Members online';
@@ -95,19 +159,54 @@ function joinChannel(nameChannel,channelID){
         url:'http://localhost:3000/chat/messages/' + channelID ,
         method: 'GET'
     }).done(function(data){
-        headerName.innerText = "#" + nameChannel;
-        data.map(message => {
-            let pElement = document.createElement('p');
-            let liElement = document.createElement('li');
-            pElement.innerText = message.text;
-            liElement.innerText = message.username;
-            liElement.append(pElement);
-            chatMessages.append(liElement)
-        });
+        if(checkChoice == 'channels'){
+            headerName.innerText = "#" + nameChannel;
+            data.map(message => {
+                reCreateMsg(message);
+            });
+        }
+        else{
+            headerName.innerText = nameChannel;
+            data.map(message => {
+                reCreateMsg(message);
+            });
+        }
         exitBtn[0].click();
     });
 } 
 
+function reCreateMsg(message){
+    let HTML;
+    let messageElement = document.createElement('DIV');
+    messageElement.classList.add('text-container');
+    if(username.toLowerCase() == message.username){
+        HTML = `<div class = "icon-container">
+            <a id = ${message._id} class="fas fa-pen editMessage"></a>
+            <a id = "deleteMessage" class="fas fa-trash-alt"></a>
+        </div>`
+    }else{
+        HTML = ``;
+    }
+    messageElement.innerHTML = 
+    `<div class = "title">
+    <p class = "chat-name">${message.username}
+        <span class = "chat-time">${message.time}</span>
+    </p>
+    ${HTML}
+    </div>
+    <div class = "chat-message">
+        ${message.text}
+    </div>`;
+    messageElement.setAttribute('name',message._id)
+    messageContainer.append(messageElement)
+    if(username.toLowerCase() == message.username){
+        document.getElementById(message._id).addEventListener('click', (e) => {
+            editMsgID = message._id;
+            editMessageContainer.style.display = "block";
+            overlay.style.display = "block";
+        })
+    }
+}
 /* If the user clicks the "create" new channel btn, we sending the information to the client server */
 createChannelBtn.addEventListener('click', (e) => {
     e.preventDefault();
@@ -132,20 +231,6 @@ createChannelBtn.addEventListener('click', (e) => {
     });
 })
 
-
-
-
-// async function DisplayMessages(id){
-//     const responseMessages = await fetch('http://localhost:5000/channels/messages/' + id )
-//     const dataMessages = await responseMessages.json()
-//     dataMessages.forEach(message => {
-//         let H1 = document.createElement('H1');
-//         let H2 = document.createElement('H2');
-//         H1.innerText = message.username;
-//         H2.innerText = message.text;
-//         chatMessages.append(H1)
-//         chatMessages.append(H2)
-//     });
     
    
     
