@@ -27,9 +27,9 @@ app.use(flash());
 app.use(session({secret: 'mySecret', 
   resave: true, 
   saveUninitialized: true,
-  // cookie: {
-  //   maxAge: 24 * 60 * 60 * 1000
-  // }
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000
+  }
   }));
 /* SASS middleware that takes our SCSS file and convert it to a CSS file */ 
 app.use(sassMiddleware({
@@ -60,13 +60,12 @@ app.use('/register', RegisterRouter);
 app.use('/',ProfileRouter);
 // app.use('/chat/new-directMessage', CreateDirectMessageRouter);
 
-
+// var allUsernameIDS = {};
 var usernameIDS = {};
 var users;
 io.on('connection', function (socket) {
   var currentChannel, username, nrOfUsers, socketID;
   let clientList;
-
   socket.on('reset_users_channel', (data) => {
     users = [];
     usernameIDS[data.socketID] = data.username;
@@ -86,7 +85,6 @@ io.on('connection', function (socket) {
   });
 
   socket.on('join_channel', (data) => {
-    users = [];
     currentChannel = data.channelID
     socket.join(currentChannel);
     if (io.sockets.adapter.rooms[currentChannel]){
@@ -98,19 +96,36 @@ io.on('connection', function (socket) {
       io.in(currentChannel).emit('numberOfUsers', {numberOfUsers: nrOfUsers, memberList: users})
     }
   });
+  socket.on('set_username', (username) => {
+    socket.username = username;
+  });
 
-  // socket.on('get_all_members', (data) => {
-  //   usernameIDS[data.socketID] = data.username;
-  //   if (io.sockets.adapter.rooms[currentChannel]){
-  //     clientList = Object.keys(io.sockets.adapter.rooms[currentChannel].sockets) 
-  //     for(let x = 0; x < nrOfUsers; x++){
-  //       users.push(usernameIDS[clientList[x]])
-  //     }
-  //     console.log(users);
-  //     io.in(currentChannel).emit('show_all_members', {memberList: users})
-  //   }
-  // });
+  socket.on('create_directMessage', (data) => {
+    currentChannel = data.channelID
+    socket.join(currentChannel);
+    var sockets = io.sockets.sockets;
+    for(var socketId in sockets) {
+      var s = sockets[socketId]; 
+      if(s.username == data.targetUsername){ 
+        s.join(currentChannel);
+      }
+    }
+    io.in(currentChannel).emit('add_directMessage', {targetUsername: data.targetUsername, targetID: data.targetID, username: data.username});
+  });
+
+  socket.on('create_message', (data) => {
+    io.in(data.channelID).emit('send_message', {username: data.username, time: data.time, text: data.text, msgID: data.msgID})
+  })
+
+  socket.on('update_message', (data) => {
+    io.in(data.channelID).emit('change_message', {newMessage: data.message, editMsgID: data.editMsgID})
+  });
+
+  socket.on('delete_message', (data) => {
+    io.in(data.channelID).emit('remove_message', {messageID: data.messageID})
+  });
 });
+
 
 http.listen(port, () => console.log(`Client listening on port ${port}!`));
 

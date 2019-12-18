@@ -1,38 +1,30 @@
-// const socket = io.connect('http://localhost:3000')
-const messageContainer = document.getElementById('messages')
 const messageForm = document.getElementById('send')
-const messageInput = document.getElementById('input')
-//let username = document.getElementById('username').innerText;
+const messageInput = document.getElementById('msgInput')
+
+var today = new Date()
+var time = today.getHours() + ":" + (today.getMinutes()<10?'0':'') + today.getMinutes()
 
 
-// let name = "andreas";
+messageForm.addEventListener('submit', e => {
+    e.preventDefault()
+    const message = messageInput.value
+    sendMessage(username,message,channelIDButton)
+    messageInput.value = ''
+    messageContainer.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"})
+})
 
-// socket.on('chat-message', data => {
-//     appendMessage(username `: ${data.message}`)
-// })
-
-
-// socket.on('news', function (data) {
-//     const messageElement = document.createElement('li')
-//     messageElement.innerText = data.hello;
-//     messageContainer.append(messageElement)
-// });
-
-
-// socket.on('user-disconnected', name => {
-//     appendMessage(`${name} disconnected`)
-// })
-
-// messageForm.addEventListener('submit', e => {
-//     e.preventDefault()
-//     const message = messageInput.value
-//     appendMessage(`${name}: ${message}`)
-//     socket.emit('send', message)
-//     messageInput.value = ''
-// })
-
-function appendMessage(message) {
-    const messageElement = document.createElement('li')
-    messageElement.innerText = message
-    messageContainer.append(messageElement)
+function sendMessage(username,message,channelID) {
+    $.ajax({
+        url: 'http://localhost:3000/chat/new-message',
+        method: 'POST',
+        data: 
+        {
+            channelID: channelID,
+            username: username,
+            time: time,
+            text: message
+        }
+    }).done(function(data){
+        socket.emit('create_message', {channelID: channelID, username: username, time: time, text: message, msgID: data.id})
+    });
 }

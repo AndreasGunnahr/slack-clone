@@ -19,6 +19,51 @@ router.get('/', async function(req, res, next) {
      });
 });
 
+/* POST new message */ 
+router.post('/new-message', function(req,res,next){
+    const option = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(req.body) 
+    }
+    fetch('http://localhost:5000/messages/new', option)
+    .then(response => response.json())
+    .then(data => {
+        res.send(data);
+    })
+});
+
+router.put('/message/edit/:id', function(req,res,next){
+    const option = {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(req.body) 
+    }
+    fetch('http://localhost:5000/messages/edit/' + req.params.id, option)
+    .then(response => response.json())
+    .then(data => {
+        res.send(data);
+    })
+})
+
+router.delete('/message/delete/:id', function(req,res,next){
+    const option = {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }
+    fetch('http://localhost:5000/messages/delete/' + req.params.id, option)
+    .then(response => response.json())
+    .then(data => {
+        res.send(data);
+    })
+});
+
 /* Getting all messages for each chat */
 router.get('/messages/:id', async function(req,res,next){
     let channelID = req.params.id;
@@ -114,7 +159,8 @@ router.post('/new-directMessage', function (req, res, next) {
     const clickedUser = {
         createdByUserID: req.session.activeUser.id,
         selectedUserID: req.body.id,
-        username:  req.body.username
+        createdByUsername:  req.session.activeUser.username,
+        selectedByUsername: req.body.username
     }
     const option = {
         method: "POST",

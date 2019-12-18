@@ -49,12 +49,11 @@ router.get('/:id', function (req, res, next){
 /* GET all messages to the specific channel. */
 router.get('/messages/:id', function (req, res, next) {
     let clickedChannelID = req.params.id;
-    Messages.find({channelID: clickedChannelID},{'_id': 0, 'username': 1, 'time': 1, 'text': 1}, function(err, data) {   
+    Messages.find({channelID: clickedChannelID}, function(err, data) {   
         if(err){
             res.status(500).send();
         }
         else{
-            console.log("data: " + data)
             res.send(data);
         }
     });
@@ -82,14 +81,13 @@ router.post('/check-new-channel', function (req, res, next) {
 
 /* POST new Channel information if we have a valid channel name from the search channel router */
 router.post('/new-channel', function (req, res, next) {
-    let id;
     try{
         let channel = new Channels(req.body);
         channel.save(function (err, channelObject) {
             if (err){
                 res.status(500).send();
             }
-            id = channelObject._id;
+            let id = channelObject._id;
             res.status(201).json({ status: true, success: "Channel created!", id: id });
         });
     }catch{
@@ -102,7 +100,7 @@ router.post('/new-channel', function (req, res, next) {
 // /* GET all Channels information from each user ID. */
 router.get('/directMessage/:id', function (req, res, next){
     const userID = req.params.id;
-    DirectMessages.find({createdByUserID: userID}, function(err, data) {   
+    DirectMessages.find({$or: [{createdByUserID: userID},{selectedUserID: userID}]}, function(err, data) {   
         if(err){
             res.status(500).send();
         }
@@ -126,7 +124,7 @@ router.post('/check-new-directMessage', function (req, res, next) {
 
 /* POST new Channel information and checking if the Channel is valid. */
 router.post('/new-directMessage', function (req, res, next) {
-    DirectMessages.findOne({selectedUserID: req.body.selectedUserID }, async function(err, data) {   
+    DirectMessages.findOne({selectedUserID: req.body.selectedUserID, createdByUserID: req.body.createdByUserID}, async function(err, data) {   
         if(err){
             res.status(500).send();
         }
@@ -137,11 +135,12 @@ router.post('/new-directMessage', function (req, res, next) {
                     if (err){
                         res.status(500).send();
                     }
+                    let id = directMessageObject._id;
+                    res.status(201).json({ status: true, success: "Direct message created!", id: id});
                 });
-                res.status(201).json({ status: true, success: "Direct message created!" });
 
             }catch{
-                res.status(500).send();
+                res.status(500).send(); 
             }
         }
         else{

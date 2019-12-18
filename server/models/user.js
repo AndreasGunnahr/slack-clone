@@ -20,7 +20,7 @@ const UserSchema = mongoose.Schema(
       default: 'uploads/defaultPicture.png'
     }
     
-  });
+  },{collection: 'users'});
 // {timestamps: true}
 
 module.exports = mongoose.model('User',UserSchema);

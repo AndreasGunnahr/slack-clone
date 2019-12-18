@@ -8,13 +8,23 @@ const successText = document.getElementById('createChannel__success');
 const directMessageError = document.getElementById('createDirectMessage__error');
 const joinChannelBtn = document.getElementById('joinChannelBtn');
 const showAllChannelsContainer = document.getElementById('showChannels__container');
+const editMessageContainer = document.getElementById('editMessage__container');
+// const deleteMessageBtn = document.getElementById('deleteMessage');
+// const editMessageBtn = document.getElementById('editMessage');
+const cancelBtn = document.getElementById('cancel');
 
 const exitBtn = document.querySelectorAll('.fa-times');
+
+cancelBtn.addEventListener('click', () => {
+    editMessageContainer.style.display = "none";
+    overlay.style.display = "none";
+})
 
 joinChannelBtn.addEventListener('click', () => {
     showAllChannelsContainer.style.display = "block";
     overlay.style.display = "block";
 });
+
 
 showChannelContainer.addEventListener('click', () => {
     createChannelContainer.style.display = "block";
@@ -35,6 +45,7 @@ overlay.addEventListener('click', () => {
     errorText.innerText = "";
     successText.innerText = "";
     directMessageError.innerText = "";
+    editMessageContainer.style.display = "none";
 })
 
 exitBtn.forEach(btn => {
@@ -47,6 +58,7 @@ exitBtn.forEach(btn => {
         errorText.innerText = "";
         successText.innerText = "";
         directMessageError.innerText = "";
+        editMessageContainer.style.display = "none";
     })
 });
 
