@@ -24,7 +24,7 @@ createdDirectMessage.forEach(directMessage => {
 
 function addRemoveActive(e,username,id,checkValue ){
     let createdDirectMessage = document.querySelectorAll('.createdDirectMessage');
-    createdDirectMessage.forEach(directMessage => { directMessage.classList.remove('active'); });
+    document.querySelectorAll('.channel').forEach(directMessage => { directMessage.classList.remove('active'); });
     channels.forEach(channel => { channel.classList.remove('active'); });
     e.target.classList.add('active');
     joinChannel(username, id, checkValue);
@@ -97,7 +97,7 @@ socket.on('send_message', (data) => {
     }    
 })
 
-/* Checking against the DB if the room name is available for the current user */ 
+/* Checking against the DB if the channel name is available for the current user */ 
 createChannelInput.addEventListener('input', (e) => {
     const searchValue = e.target.value;
     $.ajax({
@@ -247,6 +247,10 @@ createChannelBtn.addEventListener('click', (e) => {
             linkTag.innerHTML = '<i class = "fas fa-hashtag"></i>' + name;
             linkTag.classList.add('channel');
             linkTag.setAttribute('name', data.id);
+            linkTag.addEventListener('click', (e) => {
+                console.log("här")
+                addRemoveActive(e, e.target.innerText ,e.target.attributes[0].value, 'channels' );
+            })
             channelsContainer.append(linkTag);
             exitBtn[1].click();
         }
