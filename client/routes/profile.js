@@ -134,12 +134,15 @@ router.post('/delete', function(req, res, next){
         };
         
         fetch("http://localhost:5000/api/profiles/delete", option)
-        .then(r =>  r.text().then(data => ({status: r.status, body: data})))
+        .then(r =>  r.json().then(data => ({status: r.status, body: data})))
         .then(function(data){
+            renderData(data);
+            console.log(data);
         });
-    res.render('profile', {
-        defaultPicture: 'uploads/defaultPicture.png'
-    })
+        function renderData(data){
+            res.render('profile', {defaultPicture: data.body.image, email: data.body.email, name: data.body.name})
+        };
+    
 })
 
 module.exports = router;

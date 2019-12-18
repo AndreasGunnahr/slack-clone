@@ -49,6 +49,7 @@ router.post('/profiles/delete', function(req, res, next){
     const image = { image: req.body.image};
     Profile.findByIdAndUpdate(id, image).then(function(){
     Profile.findOne(id).then(function(profile){
+        console.log(profile);
         res.send(profile);
     });
 }).catch(next);
