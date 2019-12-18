@@ -11,7 +11,6 @@ saveChangesBtn.addEventListener('click', () => {
    }).done(function(data){
        socket.emit('update_message', {message: newText, channelID: channelIDButton, editMsgID: editMsgID})
        cancelBtn.click();
-       // MAKE A SOCKET CALL TO UPDATE THE SCREEN ON ALL CLIENTS. 
    });
 });
 
