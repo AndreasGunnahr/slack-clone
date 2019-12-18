@@ -12,17 +12,18 @@
     </div>
     <div class="container">
         <div class="profilePic">
-            <div></div>
             <p>Profile photo <%= msg %></p>
             <img src="<%= typeof file != 'undefined' ? file : defaultPicture %>">
-            <form action="/upload" method="POST" enctype="multipart/form-data">
-                <label for="btn" class="btn pic">Upload an image </label>
-                <input id="btn" name="profilePicture" type="file" onchange="this.form.submit()" accept="image/png, image/jpeg" style="visibility: hidden;">
-            </form>
-            <form action="/delete" method="POST" enctype="multipart/form-data">
-                <label for="up" class="btn dlt">Delete image </label>
-                <input id="up" type="submit" onchange="this.form.submit()" class="btn" style="visibility: hidden;">
-            </form>
+            <div class = "form__container">
+                <form action="/upload" method="POST" enctype="multipart/form-data">
+                    <label for="btn" class="btn pic">Upload an image </label>
+                    <input id="btn" name="profilePicture" type="file" onchange="this.form.submit()" accept="image/png, image/jpeg" style="display: none;">
+                </form>
+                <form action="/delete" method="POST" enctype="multipart/form-data">
+                    <label for="up" class="btn dlt">Delete image </label>
+                    <input id="up" type="submit" onchange="this.form.submit()" class="btn" style="display:none">
+                </form>
+            </div>
         </div>
         <div class="profileInfo">
                 <form action="/savedChanges" method="POST">

@@ -44,9 +44,8 @@ img {
 
 .profilePic {
     width: 366px;
-    height: 500px;
+    height: auto;
     margin: 0 auto;
-    margin-left: 50px;
     font-weight: bolder;
 }
 
@@ -88,10 +87,17 @@ img {
     margin: 60px 0px 5px 0px;
     input {
         margin: 5px 0px 30px 0px;
-        padding: 10px 150px 10px 10px;
+        padding: 10px;
+        width: 300px;
         border-radius: 4px;
         border: 1px solid $border;
         font-size: 1.6rem;
+    }
+}
+
+form{
+    &:nth-child(2){
+        margin-top: 30px;
     }
 }
 
@@ -108,19 +114,32 @@ img {
 
     .container {
         flex-direction: column;
-        height: 80vh;
+        align-items: center;
+        // align-items: center;
+        height: 70vh;
         min-height: 800px;
     }
 
     .profilePic {
-        margin-left: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0;
+    }
+    .profileInfo{
+        margin: 0;
+    }
+    .form__container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 }
 
 @media only screen and (max-width: 600px) {
 
     body {
-        font-size: 2.8rem;
+        font-size: 2rem;
         background-color: $white;
     }
 
@@ -130,31 +149,51 @@ img {
     }
 
     .btn {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
 
     .back {
         h1 {
-            font-size: 3rem;
+            font-size: 2.5rem;
         }
         a {
             color: $purple;
         }
     }
 
+    .profilePic {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0;
+        margin-top: 30px;
+    }
+    
+    .form__container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        form{
+            label{
+                font-size: 1.5rem;
+            }
+        }
+    }
+
     .container {
         flex-direction: column;
-        height: 80vh;
-        width: 100vw;
-        padding: 5px;
+        align-items: center;
+        padding:0;
+        margin: 0;
+        width: 100%;
     }
 
     .profileInfo {
-        margin-left: 10vw;
+        margin: 0;
         input {
-            padding: 5px 5%;
+            padding: 5px;
             width: 100%;
-            font-size: 3rem;
+            font-size: 1.5rem;
         }
     }
 }
