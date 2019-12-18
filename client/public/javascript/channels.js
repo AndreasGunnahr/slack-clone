@@ -13,6 +13,8 @@ const directMessages = document.querySelectorAll(".directMessage");
 const directMessageContainer = document.querySelector(".directMessage__container");
 let createdDirectMessage = document.querySelectorAll('.createdDirectMessage');
 const messageContainer = document.getElementById('messages')
+const textContainer = document.getElementsByClassName('text')[0];
+const msgInput = document.getElementById('msgInput');
 let channelIDButton; 
 let editMsgID;
 
@@ -25,7 +27,7 @@ createdDirectMessage.forEach(directMessage => {
 function addRemoveActive(e,username,id,checkValue ){
     let createdDirectMessage = document.querySelectorAll('.createdDirectMessage');
     document.querySelectorAll('.channel').forEach(directMessage => { directMessage.classList.remove('active'); });
-    channels.forEach(channel => { channel.classList.remove('active'); });
+    createdDirectMessage.forEach(channel => { channel.classList.remove('active'); });
     e.target.classList.add('active');
     joinChannel(username, id, checkValue);
 }
@@ -33,6 +35,15 @@ function addRemoveActive(e,username,id,checkValue ){
 socket.on('change_message', (data) => {
     document.getElementById(data.editMsgID).childNodes[2].innerText = data.newMessage;
     document.getElementById('changedValue').value = "";
+});
+
+socket.on('display_typing', (data) => {
+    if(data.enteredValue == ""){
+        document.getElementById('isTyping').innerText = "";
+    }else{
+        document.getElementById('isTyping').innerText = data.username + " skriver..."
+    }
+    
 });
 
 socket.on('add_directMessage',(data) => {
@@ -80,6 +91,7 @@ socket.on('send_message', (data) => {
     </div>`;
     messageElement.setAttribute('id',data.msgID)
     messageContainer.append(messageElement)
+    textContainer.scrollTop = textContainer.scrollHeight;
     if(username.toLowerCase() == data.username.toLowerCase()){
         document.getElementsByName(data.msgID)[0].addEventListener('click', () => {
             editMsgID = data.msgID;
@@ -152,6 +164,8 @@ joinChannelBtn.addEventListener('click', () => {
 
 /* If the user clicks the join channel or sidebar channel */
 function joinChannel(nameChannel,channelID, checkChoice){
+    document.getElementById('isTyping').innerText = "";
+    msgInput.value = "";
     channelIDButton = channelID;
     chatMessages.innerHTML = "";
     socket.emit('reset_users_channel', {socketID: socket.id, username: username})
@@ -183,6 +197,7 @@ function joinChannel(nameChannel,channelID, checkChoice){
             });
         }
         exitBtn[0].click();
+        textContainer.scrollTop = textContainer.scrollHeight;
     });
 } 
 

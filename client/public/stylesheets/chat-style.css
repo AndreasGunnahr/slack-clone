@@ -462,13 +462,12 @@ body {
         .grid-container .sidebar .middle__container .directMessage__container .createdDirectMessage:hover {
           cursor: pointer; }
   .grid-container .text {
-    grid-row: 2/11;
+    grid-row: 2/10;
     grid-column: 2;
     background: white;
     overflow-y: scroll;
-    padding: 15px;
-    font-size: 1.4rem;
-    margin-bottom: 9rem; }
+    margin: 10px 15px 10px 15px;
+    font-size: 1.4rem; }
     .grid-container .text #messages {
       padding: 0px; }
       .grid-container .text #messages .text-container {
@@ -508,11 +507,16 @@ body {
     grid-column: 2;
     background: white;
     bottom: 0;
-    text-align: center;
-    position: sticky; }
+    position: sticky;
+    text-align: center; }
+    .grid-container #send .typing__container {
+      height: 20px; }
+      .grid-container #send .typing__container #isTyping {
+        font-size: 1.4rem;
+        font-family: "Lato", sans-serif;
+        margin-bottom: 10px; }
     .grid-container #send input {
-      margin-top: 2%;
-      margin-bottom: 2%;
+      margin-bottom: 20px;
       height: 60px;
       width: 95%;
       padding: 15px;
@@ -521,6 +525,7 @@ body {
       font-family: "Nunito", sans-serif;
       font-size: 1.4rem; }
     .grid-container #send button {
+      display: none;
       margin-top: 20px;
       height: 1px;
       width: 1px;
