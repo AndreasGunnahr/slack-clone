@@ -24,7 +24,7 @@ const fetch = require('node-fetch');
                     renderData(data);
                 });
         function renderData(data){
-            res.render('profile', {defaultPicture: data.body.image, email: data.body.email, name: data.body.name})
+            res.render('profile', {defaultPicture: data.body.image, email: data.body.email, name: data.body.name, msg: ''})
         }
       });
 
@@ -49,13 +49,30 @@ router.post('/upload', function(req, res, next) {
     upload(req, res, (err) => {
         if(err){
             console.log(err);
-            res.render('profile', {
-                msg: err,
-                defaultPicture: 'uploads/defaultPicture.png'
+            const profile = {
+                id: req.session.activeUser.id
+            }
+            
+            const option = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(profile)
+            };
+            fetch("http://localhost:5000/api/profiles/upload/error", option)
+            .then(r =>  r.json().then(data => ({status: r.status, body: data})))
+            .then(function(data){
+                renderData(data);
             });
+            function renderData(data){
+                res.render('profile', {defaultPicture: data.body.image, email: data.body.email, name: data.body.name, msg: err})
+            };  
+                 
         } else{
             if(req.file == undefined){
                 res.render('profile', {
+                    msg: '',
                     defaultPicture: 'uploads/defaultPicture.png'
                 });
             } else{
@@ -83,7 +100,8 @@ router.post('/upload', function(req, res, next) {
                         defaultPicture: 'uploads/defaultPicture.png',
                         file: `uploads/${req.file.filename}`,
                         name: data.body.name,
-                        email: data.body.email
+                        email: data.body.email,
+                        msg: '- changed'
                     });
                 }
                
@@ -115,7 +133,7 @@ router.post('/savedChanges', function(req, res, next){
                 renderData(data);
             });
     function renderData(data){
-        res.render('profile', {defaultPicture: data.body.image, email: data.body.email, name: data.body.name})
+        res.render('profile', {defaultPicture: data.body.image, email: data.body.email, name: data.body.name, msg: ''})
     }
 })
 
@@ -140,7 +158,7 @@ router.post('/delete', function(req, res, next){
             console.log(data);
         });
         function renderData(data){
-            res.render('profile', {defaultPicture: data.body.image, email: data.body.email, name: data.body.name})
+            res.render('profile', {defaultPicture: data.body.image, email: data.body.email, name: data.body.name, msg: '- deleted'})
         };
     
 })

@@ -19,12 +19,8 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 /* Setup mongoose/mongoDB connection */ 
-<<<<<<< HEAD
-mongoose.connect('mongodb://localhost/profilego', {useUnifiedTopology: true, useNewUrlParser: true})
-=======
 mongoose.connect('mongodb+srv://ydehed:Balto123@slack-project-wdtda.gcp.mongodb.net/Slack-clone?retryWrites=true&w=majority'
 , {useUnifiedTopology: true, useNewUrlParser: true})
->>>>>>> master
 .then(() => console.log('Connected to database'))
 .catch(err => console.log(`Failed to connect to database - Error: ${err.message}`));
 

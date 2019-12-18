@@ -44,6 +44,13 @@ router.post('/profiles/upload/info', function(req, res, next){
 }).catch(next);
 })
 
+router.post('/profiles/upload/error', function(req, res, next){
+    const id = { _id: req.body.id };
+    Profile.findById(id).then(function(profile){
+        res.send(profile);
+    });
+});
+
 router.post('/profiles/delete', function(req, res, next){
     const id = { _id: req.body.id };
     const image = { image: req.body.image};

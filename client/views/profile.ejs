@@ -13,7 +13,7 @@
     <div class="container">
         <div class="profilePic">
             <div></div>
-            <p>Profile photo</p>
+            <p>Profile photo <%= msg %></p>
             <img src="<%= typeof file != 'undefined' ? file : defaultPicture %>">
             <form action="/upload" method="POST" enctype="multipart/form-data">
                 <label for="btn" class="btn pic">Upload an image </label>
