@@ -93,6 +93,7 @@ socket.on('send_message', (data) => {
     messageElement.setAttribute('id',data.msgID)
     messageContainer.append(messageElement)
     textContainer.scrollTop = textContainer.scrollHeight;
+    document.getElementById('isTyping').innerText = "";
     if(username.toLowerCase() == data.username.toLowerCase()){
         document.getElementsByName(data.msgID)[0].addEventListener('click', () => {
             editMsgID = data.msgID;
