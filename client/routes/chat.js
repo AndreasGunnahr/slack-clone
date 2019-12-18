@@ -50,6 +50,20 @@ router.put('/message/edit/:id', function(req,res,next){
     })
 })
 
+router.delete('/message/delete/:id', function(req,res,next){
+    const option = {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }
+    fetch('http://localhost:5000/messages/delete/' + req.params.id, option)
+    .then(response => response.json())
+    .then(data => {
+        res.send(data);
+    })
+});
+
 /* Getting all messages for each chat */
 router.get('/messages/:id', async function(req,res,next){
     let channelID = req.params.id;

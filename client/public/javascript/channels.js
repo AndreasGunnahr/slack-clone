@@ -31,7 +31,7 @@ function addRemoveActive(e,username,id,checkValue ){
 }
 
 socket.on('change_message', (data) => {
-    document.getElementsByName(data.editMsgID)[0].childNodes[2].innerText = data.newMessage;
+    document.getElementById(data.editMsgID).childNodes[2].innerText = data.newMessage;
     document.getElementById('changedValue').value = "";
 });
 
@@ -52,14 +52,18 @@ socket.on('add_directMessage',(data) => {
     directMessageContainer.append(linkElement);
 });
 
+socket.on('remove_message', (data) => {
+    document.getElementById(data.messageID).outerHTML = "";
+})
+
 socket.on('send_message', (data) => {
     let HTML;
     let messageElement = document.createElement('DIV');
     messageElement.classList.add('text-container');
     if(username == data.username){
         HTML = `<div class = "icon-container">
-            <a id = ${data.msgID} class="fas fa-pen editMessage"></a>
-            <a id = "deleteMessage" class="fas fa-trash-alt"></a>
+            <a name = ${data.msgID} class="fas fa-pen editMessage"></a>
+            <a name = ${data.msgID} class="fas fa-trash-alt"></a>
         </div>`
     }else{
         HTML = ``;
@@ -74,15 +78,22 @@ socket.on('send_message', (data) => {
     <div class = "chat-message">
         ${data.text}
     </div>`;
-    messageElement.setAttribute('name',data.msgID)
+    messageElement.setAttribute('id',data.msgID)
     messageContainer.append(messageElement)
     if(username.toLowerCase() == data.username.toLowerCase()){
-        console.log("här")
-        document.getElementById(data.msgID).addEventListener('click', (e) => {
+        document.getElementsByName(data.msgID)[0].addEventListener('click', () => {
             editMsgID = data.msgID;
             editMessageContainer.style.display = "block";
             overlay.style.display = "block";
-        })
+        });
+        document.getElementsByName(data.msgID)[1].addEventListener('click', () => {
+            $.ajax({
+                url: 'http://localhost:3000/chat/message/delete/' + data.msgID,
+                method: 'DELETE',
+           }).done(function(status){
+                socket.emit('delete_message', {messageID: data.msgID, channelID: channelIDButton});
+           });
+        });
     }    
 })
 
@@ -181,8 +192,8 @@ function reCreateMsg(message){
     messageElement.classList.add('text-container');
     if(username.toLowerCase() == message.username){
         HTML = `<div class = "icon-container">
-            <a id = ${message._id} class="fas fa-pen editMessage"></a>
-            <a id = "deleteMessage" class="fas fa-trash-alt"></a>
+            <a name = ${message._id} class="fas fa-pen editMessage"></a>
+            <a name = ${message._id} class="fas fa-trash-alt"></a>
         </div>`
     }else{
         HTML = ``;
@@ -197,14 +208,25 @@ function reCreateMsg(message){
     <div class = "chat-message">
         ${message.text}
     </div>`;
-    messageElement.setAttribute('name',message._id)
+    messageElement.setAttribute('id',message._id)
     messageContainer.append(messageElement)
     if(username.toLowerCase() == message.username){
-        document.getElementById(message._id).addEventListener('click', (e) => {
+        document.getElementsByName(message._id)[0].addEventListener('click', () => {
+            let prevMessage = document.getElementById(message._id).childNodes[2].innerText.replace(/\s/g, "");
+            document.getElementById('changedValue').value = prevMessage;
             editMsgID = message._id;
             editMessageContainer.style.display = "block";
             overlay.style.display = "block";
-        })
+        });
+        document.getElementsByName(message._id)[1].addEventListener('click', () => {
+            $.ajax({
+                url: 'http://localhost:3000/chat/message/delete/' + message._id,
+                method: 'DELETE',
+           }).done(function(data){
+                socket.emit('delete_message', {messageID: message._id, channelID: channelIDButton});
+           });
+        });
+
     }
 }
 /* If the user clicks the "create" new channel btn, we sending the information to the client server */

@@ -57,6 +57,8 @@ body {
         padding: 10px;
         border: 1px solid $grey;
         border-radius: 5px;
+        font-family: $chat-font;
+        font-size: 1.4rem;
     }
     .button__container{
         display: flex;

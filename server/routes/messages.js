@@ -30,8 +30,22 @@ router.put('/edit/:id', function(req,res,next){
             res.status(200).json({data: 'Updated'});
        });
     }catch{
-
+        res.status(500).send()
     }
 })
+
+router.delete('/delete/:id', function(req,res,next){
+    let messageID = req.params.id;
+    try{
+       Messages.deleteOne({_id: messageID}, function(err, messageObject){
+            if(err){
+                res.status(500).send()
+            }
+            res.status(200).json({data: 'Deleted'});
+       });
+    }catch{
+        res.status(500).send()
+    }
+});
 
 module.exports = router;

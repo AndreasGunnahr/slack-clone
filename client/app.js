@@ -106,6 +106,10 @@ io.on('connection', function (socket) {
   socket.on('update_message', (data) => {
     io.in(data.channelID).emit('change_message', {newMessage: data.message, editMsgID: data.editMsgID})
   });
+
+  socket.on('delete_message', (data) => {
+    io.in(data.channelID).emit('remove_message', {messageID: data.messageID})
+  });
 });
 
 
