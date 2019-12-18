@@ -411,10 +411,18 @@ body {
         background: $purple;
         .profileLink {
             margin-top: 10px;
+            margin-left: 10px;
+            display: flex;
+            align-items: center;
             a {
                 padding: 10px;
                 color: $grey;
                 font-size: 1.5rem;
+            }
+            #profile__picture{
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
             }
         }
         .top__container{

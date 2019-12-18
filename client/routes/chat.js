@@ -12,6 +12,7 @@ router.get('/', async function(req, res, next) {
     const responseUsers = await fetch('http://localhost:5000/users');
     const allUsers = await responseUsers.json()
     res.render('chat', {
+        image: req.session.activeUser.image,
         username: req.session.activeUser.username, 
         channels: allChannels,
         directMessages: allDirectMessage,

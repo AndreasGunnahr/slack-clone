@@ -88,6 +88,7 @@ router.post('/upload', function(req, res, next) {
                 body: JSON.stringify(profile)
                 };
                 
+                req.session.activeUser.image = `uploads/${req.file.filename}`;
                 fetch("http://localhost:5000/api/profiles/upload", option)
                 .then(r =>  r.json().then(data => ({status: r.status, body: data})))
                 .then(function(data){

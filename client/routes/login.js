@@ -20,6 +20,7 @@ router.post('/', function (req, res, next) {
     .then(response => {
         response.json().then(function(data) {
             if(data.status){
+                console.log(data)
                 req.session.activeUser = data;
                 res.redirect('/chat');
             }else{ 
