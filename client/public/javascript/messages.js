@@ -5,30 +5,6 @@ msgInput.addEventListener('input', (e) => {
     socket.emit('someone_typing', {username: username, channelID: channelIDButton, enteredValue: e.target.value})
 });
 
-
-// socket.on('typing_message', (data) => {
-//     let HTML;
-//     let typingElement = document.createElement('DIV');
-//     typingElement.classList.add('is-typing');
-//     typingElement.innerHTML =
-//     `<div class = "is_typing">
-//     <p class = "name-typing">${data.username}
-//         <span class = "message-typing">is typing...</span>
-//     </p>
-//     `
-//     typingElement.setAttribute('name',data.username)
-//     messageContainer.append(typingElement)
-//     if(username.toLowerCase() == data.username.toLowerCase()){
-//         document.getElementById(data.msgID).addEventListener('keyup', (e) => {
-//             console.log("someone is typing")
-//         })
-//     }
-//     console.log('error bror')
-// })
-// socket.on('is_typing', (data) => {
-//     io.in(data.channelID).emit('typing_message', {username: data.username, editMsgID: data.editMsgID})
-//   });
-
 socket.emit('set_username', username);
 
 saveChangesBtn.addEventListener('click', () => {

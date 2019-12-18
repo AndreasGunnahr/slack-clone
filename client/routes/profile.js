@@ -31,7 +31,7 @@ const fetch = require('node-fetch');
 
 //Set storage engine
 const storage = multer.diskStorage({
-    destination: './public/uploads',
+    destination: './client/public/uploads',
     filename: function(req, file, cb){
         cb(null, file.fieldname + '-' + Date.now() + 
         path.extname(file.originalname));
@@ -48,7 +48,6 @@ const upload = multer({
 router.post('/upload', function(req, res, next) {
     upload(req, res, (err) => {
         if(err){
-            console.log(err);
             const profile = {
                 id: req.session.activeUser.id
             }
@@ -94,7 +93,6 @@ router.post('/upload', function(req, res, next) {
                 .then(function(data){
                     renderData(data);
                 });
-                //console.log(`uploads/${req.file.filename}`);
                 function renderData(data) {
                     res.render('profile', {
                         defaultPicture: 'uploads/defaultPicture.png',
@@ -117,8 +115,6 @@ router.post('/savedChanges', function(req, res, next){
         name: req.body.name,
         email: req.body.email
     }
-    console.log(req.body);
-    console.log(profile);
 
     const option = {
     method: "POST",
@@ -155,7 +151,6 @@ router.post('/delete', function(req, res, next){
         .then(r =>  r.json().then(data => ({status: r.status, body: data})))
         .then(function(data){
             renderData(data);
-            console.log(data);
         });
         function renderData(data){
             res.render('profile', {defaultPicture: data.body.image, email: data.body.email, name: data.body.name, msg: '- deleted'})
