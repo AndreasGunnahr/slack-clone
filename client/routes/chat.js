@@ -4,20 +4,24 @@ const fetch = require('node-fetch');
 
 /* GET chat view/page. */
 router.get('/', async function(req, res, next) {
-    const id = req.session.activeUser.id;
-    const responseChannels = await fetch('http://localhost:5000/channels/' + id )
-    const allChannels = await responseChannels.json()
-    const responseDirectMessage = await fetch('http://localhost:5000/channels/directMessage/' + id )
-    const allDirectMessage = await responseDirectMessage.json()
-    const responseUsers = await fetch('http://localhost:5000/users');
-    const allUsers = await responseUsers.json()
-    res.render('chat', {
-        image: req.session.activeUser.image,
-        username: req.session.activeUser.username, 
-        channels: allChannels,
-        directMessages: allDirectMessage,
-        allUsers: allUsers
-     });
+    if(req.session.activeUser == undefined){
+        res.redirect('/');
+    }else{
+        const id = req.session.activeUser.id;
+        const responseChannels = await fetch('http://localhost:5000/channels/' + id )
+        const allChannels = await responseChannels.json()
+        const responseDirectMessage = await fetch('http://localhost:5000/channels/directMessage/' + id )
+        const allDirectMessage = await responseDirectMessage.json()
+        const responseUsers = await fetch('http://localhost:5000/users');
+        const allUsers = await responseUsers.json()
+        res.render('chat', {
+            image: req.session.activeUser.image,
+            username: req.session.activeUser.username, 
+            channels: allChannels,
+            directMessages: allDirectMessage,
+            allUsers: allUsers
+        });
+    }
 });
 
 /* POST new message */ 

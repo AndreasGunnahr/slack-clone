@@ -6,7 +6,10 @@ const fetch = require('node-fetch');
 
 
 
-    router.get('/profile', function(req, res, next) {
+router.get('/profile', function(req, res, next) {
+    if(req.session.activeUser == undefined){
+        res.redirect('/')
+    }else{
         const profile = {
             id: req.session.activeUser.id
         }
@@ -26,7 +29,8 @@ const fetch = require('node-fetch');
         function renderData(data){
             res.render('profile', {defaultPicture: data.body.image, email: data.body.email, name: data.body.name, msg: ''})
         }
-      });
+    }
+});
 
 
 //Set storage engine
@@ -146,8 +150,8 @@ router.post('/delete', function(req, res, next){
             "Content-Type": "application/json"
         },
         body: JSON.stringify(profile)
-        };
-        
+    };
+        req.session.activeUser.image = 'uploads/defaultPicture.png'
         fetch("http://localhost:5000/api/profiles/delete", option)
         .then(r =>  r.json().then(data => ({status: r.status, body: data})))
         .then(function(data){

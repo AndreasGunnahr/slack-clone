@@ -20,11 +20,12 @@ let editMsgID;
 
 createdDirectMessage.forEach(directMessage => {
     directMessage.addEventListener('click', (e) => {
-        addRemoveActive(e, e.target.innerText ,e.target.attributes[0].value, 'directMessage' );
+        addRemoveActive(e, e.target.innerText, e.target.attributes[0].value, 'directMessage' );
     });
 })
 
 function addRemoveActive(e,username,id,checkValue ){
+    console.log(id);
     let createdDirectMessage = document.querySelectorAll('.createdDirectMessage');
     document.querySelectorAll('.channel').forEach(directMessage => { directMessage.classList.remove('active'); });
     createdDirectMessage.forEach(channel => { channel.classList.remove('active'); });
@@ -54,11 +55,11 @@ socket.on('add_directMessage',(data) => {
         name = data.targetUsername;
     }
     let linkElement = document.createElement('a');
-    linkElement.classList.add('createdDirectMessage');
     linkElement.setAttribute("name", data.targetID);
+    linkElement.classList.add('createdDirectMessage');
     linkElement.innerText = name;
     linkElement.addEventListener('click', (e) => {
-        addRemoveActive(e, e.target.innerText ,e.target.attributes[0].value, 'directMessage' );
+        addRemoveActive(e, e.target.innerText, e.target.attributes[0].value, 'directMessage' );
     })
     directMessageContainer.append(linkElement);
 });
@@ -166,6 +167,7 @@ joinChannelBtn.addEventListener('click', () => {
 function joinChannel(nameChannel,channelID, checkChoice){
     document.getElementById('isTyping').innerText = "";
     msgInput.value = "";
+    console.log(channelID)
     channelIDButton = channelID;
     chatMessages.innerHTML = "";
     socket.emit('reset_users_channel', {socketID: socket.id, username: username})
