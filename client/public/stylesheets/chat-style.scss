@@ -598,11 +598,7 @@ body {
             font-size: 1.4rem;
         }
         button {
-            margin-top: 20px;
-            height: 1px;
-            width: 1px;
-            border: 1px solid gray;
-            border-radius: 10px;
+            display: none;
         }
     }
 }
