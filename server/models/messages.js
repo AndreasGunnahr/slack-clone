@@ -5,7 +5,12 @@ const chatSchema = mongoose.Schema({
     name: String,
     time: String,
     text: String
-},{collection: 'msgCollection'});
+
+},
+
+{collection: 'messages'});
+    
+
 
 
 module.exports = mongoose.model('chat', chatSchema);

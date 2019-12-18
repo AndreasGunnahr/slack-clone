@@ -7,6 +7,8 @@ const port = 5000;
 const bodyParser = require('body-parser')
 const http = require('http').createServer(app);
 
+console.log(__dirname + '/.env')
+require('dotenv').config({path: __dirname + '/.env'})
 
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -16,8 +18,9 @@ app.use(bodyParser.json())
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 /* Setup mongoose/mongoDB connection */ 
-mongoose.connect("mongodb+srv://ydehed:Balto123@slack-project-wdtda.gcp.mongodb.net/Slack-clone?retryWrites=true&w=majority", {useUnifiedTopology: true, useNewUrlParser: true})
+mongoose.connect(process.env.URL, {useUnifiedTopology: true, useNewUrlParser: true})
 .then(() => console.log('Connected to database'))
 .catch(err => console.log(`Failed to connect to database - Error: ${err.message}`));
 

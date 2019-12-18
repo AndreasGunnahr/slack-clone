@@ -20,63 +20,41 @@ socket.on('chat-message', data => {
 })
 
 socket.on('user-connected', name => {
-    sendMessage( `${name} connected`)
+    sendMessage( `${name} connected`)   
 })
 
 socket.on('user-disconnected', name => {
     sendMessage(` ${name} disconnected`)
 })
 
-socket.on('typing', () => {
-    sendMessage(` someone is typing..`)
-    console.log("someone is really typing")
-})
-
-// Typing
-socket.on('updateTyping', function(name, isTyping) {
-    if (isTyping === true) {
-        $('.user-is-typing').html(name + ' is typing...');
-    } else {
-        $('.user-is-typing').html('');
-    }
-});
+// socket.on('typing', () => {
+//     sendMessage(` someone is typing..`)
+//     console.log("someone is really typing")
+// })
 
 
 
-function istyping(){
-    const para = document.createElement('p')
-    para.classList.add("isTyping")
-    para.innerText = "someone is typing"
-    console.log("someone is typing")
-}
+// function istyping(){
+//     const para = document.createElement('p')
+//     para.classList.add("isTyping")
+//     para.innerText = "someone is typing"
+//     //console.log("someone is typing")
+// }
 
-messageForm.addEventListener('keyup', e =>{
-    if(messageInput.value.length >= 1){
-        istyping()
-        socket.emit('is typing')
-    }
-    
-})
-
-
+// messageForm.addEventListener('keyup', e =>{
+//     istyping()
+//     socket.emit('is typing')
+// })
 
 messageForm.addEventListener('submit', e => {
     e.preventDefault()
     const message = messageInput.value
-    //var messageString = ` ${message}`
     sendMessage(message)
     socket.emit('send', message)
     messageInput.value = ''
     messageContainer.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"})
+    console.log(name, time, message)
 })
-
-
-//when reloading, save chat messages
-window.addEventListener('load', e => {
-    console.log("stored adjdjjdjdj")
-    
-})
-
 
 
 
@@ -90,10 +68,11 @@ function sendMessage(message) {
                 'channelID': "87387837837874",
                 'name': name,
                 'time': time,
-                'message': message,
+                'message': message, 
     
     
             }
+            
         }).done(function(data){
             console.log(data);
             const messageDiv = document.createElement('div')
@@ -133,6 +112,33 @@ function sendMessage(message) {
         
             messageContainer.append(messageDiv)
         })
+        
     }
     
 }
+
+
+
+
+// exports.update = function(req, res) {
+//     var id = parseInt(req.params.id);
+//     var updatedCustomer = req.body; 
+//     if(customers["customer" + id] != null){
+//       // update data
+//       customers["customer" + id] = updatedCustomer;
+   
+//       console.log("--->Update Successfully, customers: \n" + JSON.stringify(customers, null, 4))
+      
+//       // return
+//       res.end("Update Successfully! \n" + JSON.stringify(updatedCustomer, null, 4));
+//     }else{
+//       res.end("Don't Exist Customer:\n:" + JSON.stringify(updatedCustomer, null, 4));
+//     }
+//   };
+   
+//   exports.delete = function(req, res) {
+//     var deleteCustomer = customers["customer" + req.params.id];
+//       delete customers["customer" + req.params.id];
+//       console.log("--->After deletion, customer list:\n" + JSON.stringify(customers, null, 4) );
+//       res.end( "Deleted customer: \n" + JSON.stringify(deleteCustomer, null, 4));
+//   };
