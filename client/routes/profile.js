@@ -66,7 +66,7 @@ router.post('/upload', function(req, res, next) {
                 renderData(data);
             });
             function renderData(data){
-                res.render('profile', {defaultPicture: data.body.image, email: data.body.email, name: data.body.name, msg: err})
+                res.render('profile', {defaultPicture: data.body.image, email: data.body.email, name: data.body.name, msg: ` - ${err.message}`})
             };  
                  
         } else{

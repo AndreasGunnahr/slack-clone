@@ -124,6 +124,10 @@ io.on('connection', function (socket) {
   socket.on('delete_message', (data) => {
     io.in(data.channelID).emit('remove_message', {messageID: data.messageID})
   });
+  
+  socket.on('someone_typing', (data) => {
+    io.to(data.channelID).emit('display_typing', {username: data.username, enteredValue: data.enteredValue})
+  })
 });
 
 

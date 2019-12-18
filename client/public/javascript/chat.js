@@ -9,8 +9,8 @@ messageForm.addEventListener('submit', e => {
     e.preventDefault()
     const message = messageInput.value
     sendMessage(username,message,channelIDButton)
-    messageInput.value = ''
-    messageContainer.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"})
+    messageInput.value = '';
+    document.getElementById('isTyping').innerText = "";
 })
 
 function sendMessage(username,message,channelID) {

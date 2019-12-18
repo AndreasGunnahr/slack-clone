@@ -145,7 +145,10 @@
         </div>
 
         <form id="send">
-            <input type="text" id="msgInput" name="msgVal" autocomplete="off" />
+            <div class = "typing__container">
+                <span id = "isTyping"></span>
+            </div>
+            <input type="text" id="msgInput" name="msgVal" autocomplete="off" placeholder = "Write your message" />
             <button type="submit" id="send-btn">Send</button>
         </form>
     </div>
